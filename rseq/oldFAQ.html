@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+<title>rSeq: RNA-Seq Analyzer</title><meta http-equiv="Content-Type" content="text/html; charset=gb2312"></head>
+<body>
+<p><strong>FAQ for rSeq: </strong><strong>RNA-Seq Analyzer&nbsp;</strong><strong>(for rSeq version 0.0.7, not recommended)</strong></p>
+<p><a href="../index.html">Hui Jiang</a></p>
+<hr>
+<strong></strong> 
+<p><strong>You've developed a Baysian approach to estimate confidence intervals 
+  for isoform expression estimates in the paper "Statistical Inferences for 
+  Isoform Expression in RNA-Seq". Is that algorithm implemented in rSeq?</strong></p>
+<p>Yes or No. That work was written in MATLAB therefore is not part of rSeq yet. 
+  I am planning to rewrite them in C++ and then put into rSeq. For the MATLAB 
+  code that does Bayesian inference, please follow the instructions <a href="bayesian.html">here</a>.</p>
+<p><strong>When I run gen_trans it loads and reads all the chromosome files but 
+  it doesn't write anything in the refFlat.txt.fa file. What's wrong?</strong></p>
+<p>You need to run the command in the directory of the chromosome sequences, or 
+  you will have to put the full path of the chromosome files in chrlist.txt.</p>
+<p><strong>How much memory does rSeq need?</strong></p>
+<p>Usually 2GB memory should be sufficient. For more than 10M reads, SeqMap may 
+  need more than 2GB memory, which usually requires a 64-bit system. To reduce 
+  memory usage, you can split the read file into two or more parts and map each 
+  part separately and then concatenate the mapping results.</p>
+<p><strong>How can I splite the read file and combine the results?</strong></p>
+<p>Use linux command "split" to split the reads, "cat" to 
+  concatenate the results.</p>
+<p><strong>What seqmap does with duplicate reads? does it count them in the output 
+  but just leave them out of the alignment?</strong></p>
+<p>SeqMap finds all the duplicate reads, maps one of them, and replicates the 
+  result for the rest of them. So don't worry, all of them are there in the output 
+  file.</p>
+<p><strong>Are the mapping results in Seqmap output in strict order? I'm planning 
+  to split my reads data into several pieces, map them with Seqmap and combine 
+  the results as input to rSeq. I'm wondering whether this partition will break 
+  the structure in Seqmap output file.</strong></p>
+<p>Yes, they are in strict order. You can go ahead splitting the data files. </p>
+<p><strong>Can rSeq compute expressions on SeqMap data run with a 3 bp mismatch 
+  allowance?</strong></p>
+<p>Yes, simply run rSeq with option "-n 3".</p>
+<p><strong>I’m trying to use gen_trans and rseq will only recognize one file, 
+  then everything else in my file list is invalid. I checked a handful of the 
+  files and they are all in the correct fasta format.</strong></p>
+<p>You may have created or edited the chrfilelist.txt file in Windows and then 
+  used it in Linux. Windows and Linux have different ways of encoding text files. 
+  If that's reason, you can either create and edit the file in Linux directly 
+  (e.g., using vi) or transform them into Linux format using command unix2dos. 
+</p>
+<p><strong>I’m mapping some reads to a hg18 fasta file and I’m getting this message 
+  as seqmap runs: </strong><strong>"......Bad charactor R found when processing 
+  transcript chr16_random. Skipped......." </strong><strong>What does this 
+  mean? Is it skipping the entire chromosome? Or just that bp?</strong></p>
+<p>Don't worry. Only that base is skipped.</p>
+<p><strong>I got the following error in running SeqMap:</strong><strong><br>
+  bad format in line: @SRR002051.1 :8:1:325:773 length=33 AAAGAACATTAAAGCTATATTATAAGCAAAGAT 
+  NM<br>
+  internal error: read file failed</strong></p>
+<p>It is because you have space in your read tag "@SRR002051.1 :8:1:325:773 
+  length=33". Changing it to ""@SRR002051.1" should solve 
+  the problem. You should use /eland:3 in the mapping.</p>
+<p><strong>SeqMap told me that there is not enough memory but actually I have.</strong></p>
+<p>Sometimes SeqMap's memory detection function has some problem. If you are sure 
+  that is the case you can turn it off by using option "/available_memory:8000" 
+  to specify say 8G available memory as in the example. </p>
+<p><strong>When I run "rseq gen_trans" I got the error message " 
+  is not a vaid fasta file." and only one file in my file list is processed.</strong></p>
+<p>Did you edit the file "chrfilelist.txt" in Windows and then use it 
+  in Linux? Windows and Linux have different ways of encoding text files. If that's 
+  reason, you can either create and edit the file in Linux directly (e.g., using 
+  vi) or transform them into Linux format using command unix2dos. </p>
+<p><strong>What happes if a gene has multiple isoforms when I run "rseq comp_exp"?</strong></p>
+<p>When multiple isoforms are annotated with the same gene, rseq will take the 
+  longest of them to compute the gene length.</p>
+<p><strong>Where can I download the UCSC refFlat files, say, for Arabidopsis Thalina, 
+  in order to generate the transcript sequences?</strong></p>
+<p><strong> </strong>It seems that UCSC does not provide support for Arabidopsis 
+  so we will have to prepare the file by ourselves (based on the NCBI release). 
+  Fortunately, you can download the package prepared by Hongkai Ji at Johns Hopkins 
+  at http://www.biostat.jhsph.edu/~hji/cisgenome/index_files/download.htm, choose 
+  the Genome Database for TAIR8 and unzip it. You can find the genome sequences 
+  and the refFlat.txt file (in subdirectory "annotation").<strong> </strong></p>
+<p><strong>How does rSeq the 95% confidence intervals for gene expression estimates?</strong></p>
+<p> The 95% confidence intervals are computed by using normal approximation of 
+  binomial random variables, i.e., we assume the number of reads mapped to a gene 
+  is a binomial random variable with parameters (p, N), where p is the gene expression, 
+  and N is the total number of mapped reads.</p>
+<p><strong>What makes rSeq any different than ERANGE?</strong></p>
+<p>rSeq is a set of tools for RNA-Seq analysis, including quality control, sequence 
+  alignment, gene expression calculation, isoform expression calculation and so 
+  on. For gene expression calculation, rSeq uses the Mortazavi's approach to estimate 
+  gene level RPKM and to split multi-reads. However, rSeq maps the reads to annotated 
+  transcripts rather than genome+splices as does in ERANGE, which can help reduce 
+  multi-reads, reduce running time, fully exploit splice reads and etc. For isoform 
+  expression, rSeq uses the approach described in "Statistical Inferences 
+  for isoform expression in RNA-Seq", Bioinformatics, 25(8):1026-1032, (2009).</p>
+<p><strong>Can rSeq output refseq names along with gene names?</strong></p>
+<p>One gene can have several transcripts each with a different RefSeq ID. If you 
+  feed rSeq with an annotation file with Entrez gene IDs instead gene names, rSeq 
+  will output in Entrez gene IDs.</p>
+<p><strong>Can you tell me how you calculated the transcript length for each gene? 
+  For example, for this gene: Mrc2 (NM_008626). My calculation is: 5801 but in 
+  Rseq output, the length is 5765. It seems your length is always a bit shorter 
+  (sometimes a lot) than mine. Did you exclude some regions from calculation? 
+  </strong></p>
+<p> rSeq uses effective gene length, which is the actual gene length minus the 
+  read length, which is the number of possible different reads that <br>
+  you can get from that gene. </p>
+<p><strong>Is it important to specify the read length "-r" option, if 
+  I do not specify this, will the program automatically detect the length of the 
+  reads?</strong></p>
+<p>If you don't specify it, it will take the default value 25. In the isoform 
+  expression case, it is important to specify the read length. </p>
+<p> <strong>What command will tell me the RSAT version I’m using?</strong></p>
+<p>Sorry, no such command yet. To make sure you are using the latest version, 
+  you can download it again from the website.</p>
+<p><strong>Does rSeq do de novo isoform discovery?</strong></p>
+<p>No, it does not. For de novo splicing event discovery, you can try <a href="http://www.stanford.edu/group/wonglab/SpliceMap/">SpliceMap</a>.</p>
+<p><strong>Can I use other mapping software such as MAQ or Bowtie with rSeq?</strong></p>
+<p>No, right now only SeqMap and Eland are supported. The mapping usually take 
+  only a few minutes.</p>
+<p><strong>Does rSeq accept GFF file as gene annotations?</strong></p>
+<p>No, it does not.</p>
+<p><strong>Does rSeq output per exon RPKMs?</strong></p>
+<p>No, it does not.</p>
+<p><strong>Does rSeq do differential expression?</strong></p>
+<p>No, it does not.</p>
+<p><strong>Even though I have an annotation annotation.txt that looks valid, I 
+  don't get any subexons:</strong><br>
+<strong>"loading refFlat file: annotation.txt<br>
+  0 duplicate transcripts.<br>
+  checking data.<br>
+  total 0 genes, 0 transcripts, 0 genes have unique transcript, max num transcript 
+  a gene is 0.<br>
+  0 genes have too small overlap.<br>
+  generating results.<br>
+  generating subexons.<br>
+  checking subexons.<br>
+  generating subexon vectors.<br>
+  checking subexon vectors.<br>
+  writing subexon file: f.txt.subexons.txt Loading fasta file E.fa.<br>
+  1 sequences read, total length is 2974."</strong></p>
+<p> Make sure there is no white space, such as spaces, and except tabs in your 
+  annotation file. </p> 
+</body></html>

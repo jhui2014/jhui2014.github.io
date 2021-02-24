@@ -1,0 +1,505 @@
+<p><strong>README for CisGenome Browser: A flexible tool for genomic data visualization</strong></p>
+<p><a href="../index.html">Hui Jiang</a></p>
+<hr>
+<strong>Table of Contents</strong><br>
+<hr>
+<p> <strong><a href="#overview">Overview</a></strong></p>
+<p><strong> <a href="#download">Download &amp; Installation</a></strong></p>
+<blockquote>
+  <p><a href="#windows">Windows</a><br>
+   <a href="#other_os">Linux or Mac</a></p>
+</blockquote>
+<p><strong> <a href="#directory">Running Time Directory Structure</a></strong></p>
+<p><strong> </strong><strong><a href="#formats">Supported File Formats</a></strong></p>
+<blockquote>
+  <p><a href="#signal">signal track</a><br>
+    <a href="#region">region track</a><br>
+    <a href="#gene">gene track</a><br>
+    <a href="#conservation">conservation track</a><br>
+    <a href="#sequence">genome sequence track</a><br>
+    <a href="#motif">motif session</a><br>
+    <a href="#cel">cel session</a><br>
+    <a href="#data">data plot sesson</a></p>
+  </blockquote>
+<p><strong><a href="#control">Control CisGenome Browser by a Third Party Program</a></strong></p>
+<p><strong><a href="#session">Session File Format</a></strong></p>
+<p><strong> <a href="#formats"></a></strong><strong><a href="#license">License</a></strong></p>
+<p><strong><a href="#citation">Citation</a></strong></p>
+<p><strong><a href="#acknowledgements">Acknowledgements </a></strong></p>
+<hr>
+<p><strong><a name="overview" id="overview"></a>Overview</strong></p>
+<p>CisGenome Browser is an open source, platform independent tool which can work 
+  together with any other data analysis program to serve as a flexible component 
+  for genomic data visualization. It can also work by itself as a standalone genome 
+  browser. By working as a light-weight web server, CisGenome Browser is a convenient 
+  tool for data sharing between labs. It has features that are specifically designed 
+  for ultra high throughput sequencing data visualization.</p>
+<p>CisGenome Browser runs on Windows, Linux and Mac platforms. The use of CisGenome 
+  Browser is very easy, and the interface is similar to other genome browsers, 
+  such as the <a href="http://genome.ucsc.edu/cgi-bin/hgGateway">UCSC Genome Browser</a>. 
+  CisGenome Browser is suitable for visualizing microarray/sequencing/other biological 
+  data. It runs locally so that there is no need to upload the user data via internet 
+  like adding custom tracks when using UCSC Genome Browser or any other online 
+  browsers. </p>
+<p>CisGenome Browser is designed to work with any other programs as a visualization 
+  component. It is integrated in <a href="http://www.biostat.jhsph.edu/%7Ehji/cisgenome/index.htm">CisGenome</a> 
+  and <a href="http://gluegrant1.stanford.edu/%7Ejunhee/JETTA/index.html">JETTA</a>. 
+  Here is a nice <a href="http://www.biostat.jhsph.edu/%7Ehji/cisgenome/index_files/tutorial_visualization.htm">tutorial</a> 
+  on CisGenome Browser written by <a href="http://www.biostat.jhsph.edu/%7Ehji/">Hongkai 
+  Ji</a>..</p>
+<p><strong> <a name="download" id="download"></a>Download &amp; Installation</strong></p>
+<p>For detailed instructions, see <a href="getting_started/index.html">Getting 
+  Started</a>.</p>
+<p><strong><a name="windows" id="windows"></a></strong>1. Download the zipped 
+  files from its website.</p>
+<p>2. Unzip the files to somewhere on the hard drive. If an old version is reviously 
+  installed, just unzip the files to the same directory to have the program files 
+  overwritten. All the user data will not be touched, and they will be automatically 
+  pre-loaded with the new version. To prevent unexpected damage, backup the files 
+  first. </p>
+<p>3. Click display_server_pi.exe (or display_server.exe if you are using the 
+  old Windows only version) to run it. then a tray icon will automatically appear 
+  in the tray area. A dialog might pop up asking about blocking the program, just 
+  click &quot;Unblock&quot;.</p>
+<p>4. Right click it and choose &quot;Browse&quot; (double click the icon will 
+  do the same). A web page will be opened in your default browser.</p>
+<p>5. In the web page, create new sessions or load old sessions, according to 
+  the manual.</p>
+<p>6. play with it~</p>
+<p><strong><a name="other_os" id="other_os"></a></strong>The above is for the 
+  Windows version. For the linux or Mac versions, follow the instructions given 
+  in the <a href="getting_started/index.html">Getting Started</a>.</p>
+<p><strong><a name="directory" id="directory"></a>Running Time Directory Structure</strong></p>
+<p>The default running time directory structure is as follows:</p>
+<p>wwwroot<br>
+  |<br>
+  ------sessions<br>
+  |<br>
+  ------temp<br>
+  |<br>
+  ------templates</p>
+<p>The directory &quot;wwwroot&quot; contains the executable file display_server_pi.exe 
+  (or display_server.exe if you are using the old Windows only version).All the 
+  sessions files (*.ini) are in the &quot;sessions&quot; directory. The directory 
+  &quot;templates&quot; contains some necessary html templates that are used by 
+  the program. All the temporary files, mostly pictures, are in the &quot;temp&quot; 
+  directory.</p>
+<p>Files in the &quot;temp&quot; directory can be deleted freely. Files in the 
+  &quot;sessions&quot; directory can be deleted if the corresponding sessions 
+  are no longer needed. Files in other directories should never be deleted.</p>
+<p><strong><a name="formats" id="formats"></a>Supported File Formats</strong></p>
+<p><strong><a name="signal" id="signal"></a>For signal tracks</strong>, Affymetrix 
+  BAR file format (binary) or tab-delimited text file format are supported. The 
+  text files shoule be in the following format:</p>
+<p>Chromosome[tab]Position[tab]value</p>
+<p><a href="sample.bar.txt">Sample file</a>.</p>
+<p><strong><a name="region" id="region"></a>For region tracks</strong>, <a href="http://genome.ucsc.edu/FAQ/FAQformat.html#format1">UCSC 
+  BED format</a> is partly supported (text). </p>
+<p><a href="sample.bed.txt">Sample file</a>.</p>
+<p>It can also be only the first three columns, or add another column for signals.</p>
+<p><strong><a name="gene" id="gene"></a>For gene annotation tracks (for visualizing 
+  sequencing reads, you can use this type of track, just one read per line)</strong>, 
+  <a href="http://genome.ucsc.edu/goldenPath/gbdDescriptionsOld.html#RefFlat">UCSC 
+  refFlat format</a>, <a href="http://genome.ucsc.edu/FAQ/FAQformat.html#format1">UCSC 
+  BED format</a> or the BAM format are supported.</p>
+<p><a href="sample.refFlat.txt">Sample file</a> in refFlat format. As another 
+  example, the refFlat format annotation file for hg19 can be downloaded at <a href="http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/refFlat.txt.gz">http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/refFlat.txt.gz</a></p>
+<p><a href="sample.bed">Sample file</a> in BED format.</p>
+<p>Notice that other gene annotations files downloaded from UCSC, such as knowGenes.txt 
+  and etc, are not in exactly the same format as the refFlat.txt, therefore manually 
+  converting to the refFlat format is needed before imported into CisGenome Browser.</p>
+<p><strong><a name="sequence" id="sequence"></a>For DNA sequences</strong>, first 
+  download .fa (FASTA) files from UCSC, then convert them to .sq files using <a href="http://www.biostat.jhsph.edu/%7Ehji/cisgenome/index_files/download.htm">CisGenome 
+  command line tools</a> before imported into CisGenome Browser.</p>
+<p><strong><a name="conservation" id="conservation"></a>For conservation scores</strong>, 
+  similar to DNA sequences, download data from UCSC, convert them using <a href="http://www.biostat.jhsph.edu/%7Ehji/cisgenome/index_files/download.htm">CisGenome 
+  command line tools</a> before imported into CisGenome Browser. For details, 
+  look at the <a href="http://www.biostat.jhsph.edu/%7Ehji/cisgenome/index_files/manual.htm">User&#8217;s 
+  Manual of CisGenome</a>.</p>
+<p><strong><a name="motif" id="motif"></a>For motif session</strong>, It should 
+  be text file containing the PSSM of the motif. An example file is <a href="motif.txt">here</a>. 
+  For multiple motif file, current it only accepts the file that output by the 
+  motif sample &quot;flex_module&quot; in CisGenome. An example file is <a href="motifs.txt">here</a>.</p>
+<p><strong><a name="cel" id="cel"></a>For CEL session</strong>,<strong> </strong>it 
+  support CEL file formats from Affymetrix v1 to v5.</p>
+<p><strong><a name="control" id="control"></a>Control CisGenome Browser by a Third 
+  Party Program</strong></p>
+<p>CisGenome Browser can be easily controlled by a third party program regardless 
+  the programming language in which the program is written. The workflow for a 
+  third party program to control CisGenome Browser contains the following six 
+  steps:</p>
+<ol>
+  <li>The third party program prepares its data files in the formats that can 
+    be accepted by CisGenome browser.</li>
+  <li> The third party program prepares a session file in a simple text format 
+    (the Windows INI format, see section &quot;<a href="#session">Session File 
+    Format</a>&quot; for details), which specifies the path of the data files, 
+    the genomic region of interest and several other parameters for data visualization. 
+    The session file needs to be put in the &quot;session&quot; directory with 
+    an extention &quot;.ini&quot;.</li>
+  <li>The third party program opens a web browser and then calls CisGe-nome Browser 
+    via a HTTP request &quot;http://server_IP:port/session?name=session_name&quot;, 
+    where &quot;session_name&quot; is the name of the session file.</li>
+  <li> Working as a local web server, CisGenome Browser listens on a specific 
+    port. When it receives a request, it parses the HTTP header and retrieves 
+    the name of the session file. It then opens the session file and reads in 
+    all the parameters, including the paths of the data files.</li>
+  <li> CisGenome Browser loads the entire data files or part of them depending 
+    on the parameters specified in the session file.</li>
+  <li>CisGenome Browser generates the web page according to the parameters and 
+    sends it back to the web browser, which then presents the web page to the 
+    user. </li>
+</ol>
+<p><strong><a name="session" id="session"></a>Session File Format</strong></p>
+<p>The files in the &quot;session&quot; directory are in <a href="http://en.wikipedia.org/wiki/INI_file">Windows 
+  INI format</a>.</p>
+<p>The file contain several sections, separated by section name lines in the format 
+  &quot;[section_name]&quot;.</p>
+<p>Each section contains several parameters, each in a line in the format &quot;name=value&quot;, 
+  where &quot;name&quot; is the name of the parameter and &quot;value&quot; is 
+  the value of the parameter.</p>
+<p>The first section is &quot;[session]&quot;, which has the following possible 
+  parameters:</p>
+<table width="848" border="1">
+  <tr> 
+    <td width="68">parameter name</td>
+    <td width="118">possible values</td>
+    <td width="44">default values</td>
+    <td width="590">note</td>
+  </tr>
+  <tr> 
+    <td>type</td>
+    <td>genome, motif, cel, data</td>
+    <td>none</td>
+    <td>type of session. &quot;genome&quot; is for genome browser, &quot;motif&quot; 
+      is for motif logos, &quot;cel&quot; is for Affymetrix array image, and &quot;data&quot; 
+      is for general plot</td>
+  </tr>
+  <tr> 
+    <td>seed</td>
+    <td>int</td>
+    <td>0</td>
+    <td>internal usage</td>
+  </tr>
+  <tr> 
+    <td>refresh</td>
+    <td>0 or 1</td>
+    <td>false</td>
+    <td>refresh the page</td>
+  </tr>
+</table>
+<p>Depending on the type of the session, the second section can be &quot;[genome]&quot;, 
+  &quot;[motif]&quot;, &quot;[cel]&quot; or &quot;[data]&quot;.</p>
+<p>The &quot;[genome]&quot; section has the following possible parameters:</p>
+<table width="848" border="1">
+  <tr> 
+    <td width="153">parameter name</td>
+    <td width="306">possible values</td>
+    <td width="92">default values</td>
+    <td width="269">note</td>
+  </tr>
+  <tr> 
+    <td>num_tracks</td>
+    <td>int</td>
+    <td>0</td>
+    <td>number of tracks</td>
+  </tr>
+  <tr> 
+    <td>num_hided_tracks</td>
+    <td>int</td>
+    <td>0</td>
+    <td>number of hiden tracks</td>
+  </tr>
+  <tr> 
+    <td>region</td>
+    <td>genomic region</td>
+    <td>chr1:5001000-5002000</td>
+    <td> genomic region</td>
+  </tr>
+  <tr> 
+    <td>ucsc_genome_assembly</td>
+    <td>hg18, mm9, etc</td>
+    <td>none</td>
+    <td>genome assembly</td>
+  </tr>
+  <tr> 
+    <td>pic_width</td>
+    <td>int</td>
+    <td>800</td>
+    <td>picture width</td>
+  </tr>
+  <tr> 
+    <td>pic_margin</td>
+    <td>int</td>
+    <td>15</td>
+    <td>picture margin</td>
+  </tr>
+  <tr> 
+    <td>font_size</td>
+    <td>int</td>
+    <td>15</td>
+    <td>font size</td>
+  </tr>
+  <tr> 
+    <td>left_axis</td>
+    <td>0 or 1</td>
+    <td>1</td>
+    <td>show left axis</td>
+  </tr>
+  <tr> 
+    <td>right_axis</td>
+    <td>0 or 1</td>
+    <td>1</td>
+    <td>show right axis</td>
+  </tr>
+  <tr> 
+    <td>ucsc_browser</td>
+    <td>0 or 1</td>
+    <td>0</td>
+    <td>show UCSC genome browser</td>
+  </tr>
+  <tr> 
+    <td>grid</td>
+    <td>gray, color, gray_shaded or color_shaded</td>
+    <td>gray</td>
+    <td>grid type</td>
+  </tr>
+  <tr> 
+    <td>fold</td>
+    <td>integers separated by &quot;,&quot;</td>
+    <td>none</td>
+    <td>folded tracks</td>
+  </tr>
+</table>
+<p>Depending on the number of tracks and hiden tracks, there will be several sections 
+  &quot;[track1]&quot;, &quot;[track2]&quot;, ..., &quot;[hided_track1]&quot;, 
+  &quot;[hided_track2]&quot;, etc. Each of these sections has the following possible 
+  parameters:</p>
+<table width="848" border="1">
+  <tr> 
+    <td width="149">parameter name</td>
+    <td width="277">possible values</td>
+    <td width="48">default values</td>
+    <td width="346">note</td>
+  </tr>
+  <tr> 
+    <td>title</td>
+    <td>string</td>
+    <td>none</td>
+    <td>track title</td>
+  </tr>
+  <tr> 
+    <td>top_axis</td>
+    <td>0 or 1</td>
+    <td>0</td>
+    <td>show top axis</td>
+  </tr>
+  <tr> 
+    <td>bottom_axis</td>
+    <td>0 or 1</td>
+    <td>0</td>
+    <td>show bottom axis</td>
+  </tr>
+  <tr> 
+    <td>fast_draw</td>
+    <td>0 or 1</td>
+    <td>1</td>
+    <td>smart draw</td>
+  </tr>
+  <tr> 
+    <td>pic_filename</td>
+    <td>string</td>
+    <td>none</td>
+    <td> picture file ame</td>
+  </tr>
+  <tr> 
+    <td>type</td>
+    <td>gene, signal, conservation, region, nucleotide</td>
+    <td>none</td>
+    <td>track type</td>
+  </tr>
+  <tr> 
+    <td>file_path</td>
+    <td>string</td>
+    <td>none</td>
+    <td>input file path, for track types &quot;conservation&quot; or &quot;nucleotide&quot;</td>
+  </tr>
+  <tr> 
+    <td>pic_height</td>
+    <td>int</td>
+    <td>100</td>
+    <td>picture height, for track types &quot;conservation&quot;, &quot;signal&quot; 
+      or &quot;region&quot;</td>
+  </tr>
+  <tr> 
+    <td>plot_type</td>
+    <td>bar, heatmap, line or dot</td>
+    <td>15</td>
+    <td>type of plot, for track type&quot;signal&quot;, track types &quot;region&quot; 
+      or &quot;conservation&quot; only has &quot;bar&quot; or &quot;heatmap&quot;</td>
+  </tr>
+  <tr> 
+    <td>range_low</td>
+    <td>int</td>
+    <td>0</td>
+    <td> range lower bound, for track types &quot;signal&quot; or &quot;region&quot;</td>
+  </tr>
+  <tr> 
+    <td>range_high</td>
+    <td>int</td>
+    <td>0</td>
+    <td>range upper bound, for track types &quot;signal&quot; or &quot;region&quot;</td>
+  </tr>
+  <tr> 
+    <td>signal_width</td>
+    <td>int</td>
+    <td>0</td>
+    <td>signal width, for track type&quot;signal&quot;</td>
+  </tr>
+  <tr> 
+    <td>zero_line</td>
+    <td>0 or 1</td>
+    <td>0</td>
+    <td>draw line at zero, for track types &quot;signal&quot; or &quot;region&quot;</td>
+  </tr>
+  <tr> 
+    <td>always_include_zero</td>
+    <td>0 or 1</td>
+    <td>1</td>
+    <td>always include 0 in the range, for track types &quot;signal&quot; or &quot;region&quot;</td>
+  </tr>
+  <tr> 
+    <td>max_draw_line_distance</td>
+    <td>int</td>
+    <td>0</td>
+    <td>maxum distance between lines, for track type &quot;signal&quot;</td>
+  </tr>
+  <tr> 
+    <td>count_window</td>
+    <td>int</td>
+    <td>0</td>
+    <td>count data points in a window, for track type &quot;signal&quot;</td>
+  </tr>
+  <tr> 
+    <td>src_filename</td>
+    <td>file names separated by &quot;,&quot;</td>
+    <td>none</td>
+    <td>data file names, for track types &quot;signal&quot; or &quot;region&quot;, 
+      track type &quot;gene&quot; only has one file name</td>
+  </tr>
+  <tr> 
+    <td>color</td>
+    <td>black, red, blue, green, purple, pink, brown, orange or color code such 
+      as 0x004080 separated by &quot;,&quot;</td>
+    <td>none</td>
+    <td>colors for data files, for track type &quot;signal&quot; or &quot;region&quot;</td>
+  </tr>
+  <tr> 
+    <td>draw_exon_num</td>
+    <td>0 or 1</td>
+    <td>0</td>
+    <td>numbering exons, for track type &quot;gene&quot;</td>
+  </tr>
+  <tr> 
+    <td>do_caching</td>
+    <td>0 or 1</td>
+    <td>0</td>
+    <td>cache the gene in memory, for track type &quot;gene&quot;</td>
+  </tr>
+  <tr> 
+    <td>annotation</td>
+    <td>0 or 1</td>
+    <td>1</td>
+    <td>include track in search, for track type &quot;gene&quot;</td>
+  </tr>
+  <tr> 
+    <td>max_height</td>
+    <td>int</td>
+    <td>400</td>
+    <td>maximum track height, for track type &quot;gene&quot;</td>
+  </tr>
+</table>
+<p>The &quot;[motif]&quot; section has the following possible parameters: </p>
+<table width="848" border="1">
+  <tr> 
+    <td width="128">parameter name</td>
+    <td width="145">possible values</td>
+    <td width="153">default values</td>
+    <td width="394">note</td>
+  </tr>
+  <tr> 
+    <td>multiple_motifs</td>
+    <td>0 or 1</td>
+    <td>0</td>
+    <td>draw multiple motifs</td>
+  </tr>
+  <tr> 
+    <td>src_filename</td>
+    <td>string</td>
+    <td>none</td>
+    <td>data file name</td>
+  </tr>
+  <tr> 
+    <td>pic_filename</td>
+    <td>string</td>
+    <td>none</td>
+    <td> picture file ame</td>
+  </tr>
+</table>
+<p>The &quot;[cel]&quot; section has the following possible parameters: </p>
+<table width="848" border="1">
+  <tr> 
+    <td width="125">parameter name</td>
+    <td width="144">possible values</td>
+    <td width="155">default values</td>
+    <td width="396">note</td>
+  </tr>
+  <tr> 
+    <td>src_filename</td>
+    <td>string</td>
+    <td>none</td>
+    <td>data file name</td>
+  </tr>
+  <tr> 
+    <td>pic_filename</td>
+    <td>string</td>
+    <td>none</td>
+    <td> picture file ame</td>
+  </tr>
+</table>
+<p>The &quot;[data]&quot; section has the following possible parameters: </p>
+<table width="848" border="1">
+  <tr> 
+    <td width="125">parameter name</td>
+    <td width="144">possible values</td>
+    <td width="155">default values</td>
+    <td width="396">note</td>
+  </tr>
+  <tr> 
+    <td>src_filename</td>
+    <td>string</td>
+    <td>none</td>
+    <td>data file name</td>
+  </tr>
+  <tr> 
+    <td>pic_filename</td>
+    <td>string</td>
+    <td>none</td>
+    <td> picture file ame</td>
+  </tr>
+</table>
+<p><strong> </strong><strong><a name="license" id="license"></a>License</strong></p>
+<p>Anyone can use the source codes, documents or the excutable file of CisGenome 
+  Browser free of charge for non-commercial use. For commercial use, please contact 
+  the <a href="../index.html">author</a>.</p>
+<p><strong><a name="citation" id="citation"></a>Citation</strong></p>
+<p>Jiang, H., Wang, F., Dyer, N.P., Wong, W.H. (2010)<br>
+  CisGenome Browser: A Flexible Tool For Genomic Data Visualization<br>
+  <em>Bioinformatics</em>, in press. <font color="#003399" size="-1">[<a href="http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btq286">online</a>]</font></p>
+<p><strong><a name="acknowledgements" id="acknowledgements"></a>Acknowledgements 
+  </strong></p>
+<p>CisGenome Browser was developed and tested with the help of the members and 
+  several collaborators of the Wong lab.</p>
+<hr>
+(last modified on <!-- #BeginDate format:Am1a -->September 9, 2011 3:57 PM<!-- #EndDate -->
+) 

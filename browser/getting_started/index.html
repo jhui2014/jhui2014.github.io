@@ -1,0 +1,284 @@
+<html>
+
+<head>
+<title>GenomeBrowser Getting Started</title>
+</head>
+
+<body>
+
+<h1>CisGenome Browser Getting Started</h1>
+
+<h2>Index</h2>
+
+<a href="#How_to_launch_the_application">How
+to launch the application</a> 
+<ul style='margin-top:0cm' type=disc>
+ <li><a href="#Lauch_Windows">Windows</a></li>
+ <li><a href="#Launch_Linux">Linux</a></li>
+ <li><a href="#Launch_Mac">Mac</a></li>
+</ul>
+
+<a href="#_How_to_build">How to build the
+application from source code</a>
+
+<ul style='margin-top:0cm' type=disc>
+ <li><a href="#Build_Windows">Windows</a></li>
+ <li><a href="#Build_Linux">Linux</a></li>
+ <li><a href="#Build_Mac">Mac</a></li>
+</ul>
+
+<h1><a name="How_to_launch_the_application"></a>How to launch
+the application</h1>
+
+<h3>Windows<a name="Lauch_Windows"></a></h3>
+
+<p> Double click <i>display_server_pi.exe </i>(<i>display_server.exe</i> if using 
+  the old Windows only version)<i> </i> in the folder <i>bin. </i></p>
+<p><img border=0 width=211 height=135
+id="Picture 1" src="image001.jpg"></p>
+<p>When running the browser on windows for the first time, there might be a dialog 
+  that pops up asking for blocking the program. You need to give the permission 
+  (click the &quot;Unblock&quot; button) in order for the browser to function 
+  properly.</p>
+<p><img src="firewall.PNG" width="344" height="254"></p>
+<p>You will see a icon appears in the system tray area. Right click it and choose 
+  &quot;Browse&quot; (double click the icon will do the same) will open a web 
+  browser window which gives you the starting page of the CisGenome Browser. You 
+  can then create new sessions or load old sessions, according to the <a href="http://www-personal.umich.edu/%7Ejianghui/browser/README.html">manual</a>.</p>
+<p>Another way to open the starting page of the CisGenome Browser is to open a 
+  web browser and type in the address: &quot;http://127.0.0.1:11111/&quot; (use 
+  port 32123 if you are using the old Windows only version).</p>
+<p>Linux<a name="Launch_Linux"></a></p>
+
+<p>1. Make display_server_pi executable using command &quot;chmod +x display_server_pi&quot;; 
+</p>
+<p>2. Edit the first line of run.sh. Change &quot;/Users/wonglab/workspace/browser/bin&quot; 
+  to the path on your computer that display_server_pi lies in; </p>
+<p>3. Make run.sh executable using command &quot;chmod +x run.sh&quot;; </p>
+<p>4. Double click or execute run.sh in a console.</p>
+<p>5. Open a web browser and type in the address: &quot;http://127.0.0.1:11111/&quot;.</p>
+<p> <img border=0 width=633 height=191 id="Picture 8"
+src="image002.jpg"> </p>
+<h3>Mac<a name="Launch_Mac"></a></h3>
+
+<p><a name="How_to_build_the_application_from_source"></a>1. Make display_server_pi 
+  executable using command &quot;chmod +x display_server_pi&quot;; </p>
+<p>2. Edit the first line of run.command. Change &quot;/Users/wonglab/workspace/browser/bin&quot; 
+  to the path on your computer that display_server_pi lies in; </p>
+<p>3. Make run.command executable using command &quot;chmod +x run.command&quot;; 
+</p>
+<p>4. Double click or execute run.command in a console. </p>
+<p>5. Open a web browser and type in the address: &quot;http://127.0.0.1:11111/&quot;.</p>
+<img border=0 width=584 height=145
+src="image003.gif">
+
+<h2><a name="_How_to_build"></a>How to build the application
+from source code</h2>
+
+<h3>Windows<a name="Build_Windows"></a></h3>
+
+<p>1. Download <a
+href="http://prdownloads.sourceforge.net/wxwindows/wxMSW-2.8.10.zip">http://prdownloads.sourceforge.net/wxwindows/wxMSW-2.8.10.zip</a> 
+</p>
+<p>2. Unzip the package to a certain folder. </p>
+
+<p>3. Open <i>wxMSW-2.8.10\build\msw\wx.dsw </i>using Microsoft Visual Studio, 
+  and build the whole project. For customized build or more detailed instructions, 
+  please refer to <i>wxMSW-2.8.10\INSTALL-MSW.txt</i> for more details. After 
+  this step, you should see the resulting <i>.lib </i>files in the folder <i>wxMSW-2.8.10\lib\vc_lib.</i> 
+</p>
+<p><img border=0 width=396
+height=171 id="Picture 4" src="image004.jpg"> </p>
+<p>4. Download <a
+href="http://www.boostpro.com/download/boost_1_39_setup.exe">http://www.boostpro.com/download/boost_1_39_setup.exe</a> 
+</p>
+<p>5. Double click and install the boost package. Select <i>Multithread, static 
+  runtime</i> when asked about variants of the library. </p>
+<p><img border=0 width=396
+height=301 id="Picture 5" src="image005.jpg"> </p>
+<p>6. Download zlib for windows from <a
+href="http://gnuwin32.sourceforge.net/downlinks/zlib-lib-zip.php">http://gnuwin32.sourceforge.net/downlinks/zlib-lib-zip.php</a> 
+  and extract somewhere. (Required by BAMTools)</p>
+<p>7. Open <i>mswin/CisGenomeBrowser.sln</i> using Visual Studio 2008 or above. 
+</p>
+<p>8. Set the Visual Studio environment variables 
+<p>8.1. Open <i>Tools->Options->Projects and Solutions->VC++ Directories</i>, 
+  in the menu <i>Show directories for</i>, select <i>Include files</i>, add <i>(wxWidgets 
+  install location)\wxMSW-2.8.10\include, (wxWidgets install location)\wxMSW-2.8.10\lib\vc_lib\msw\,(zlib 
+  location)\zlib-1.2.3-lib\include\</i> and <i>(Boost install location)\boost_1_39_0\</i> 
+  to the list. 
+<p><img border=0 width=444
+height=259 id="Picture 15" src="image006.jpg"></p>
+
+<p>8.2. In the same dialog, select <i>Library files</i>, add&nbsp; <i>(wxWidgets 
+  install location)\wxMSW-2.8.10\lib\vc_lib, (zlib location)\zlib-1.2.3-lib\lib,</i> 
+  and <i>(Boost install location)\boost_1_39_0\lib</i> to the list.</p>
+
+<p><img border=0 width=453
+height=264 id="Picture 18" src="image007.jpg"></p>
+
+<p>9. Build the CisGenom_cfiles
+project.</p>
+
+<p><img border=0 width=178
+height=112 id="Picture 24" src="image008.jpg"></p>
+
+<p>10. Build the display_server_pi
+project.</p>
+
+<p><img border=0 width=231
+height=140 id="Picture 27" src="image009.jpg"></p>
+
+<h3>Linux<a name="Build_Linux"></a> (Ubuntu. Other Linux
+variations are similar)</h3>
+
+<p>1. Install GTK</p>
+
+<p>
+Type <i>sudo aptitude install gnome-core-devel build-essential </i>in the
+console</p>
+
+<p>2. Install
+wxGTK:</p>
+
+<p>
+2.1. Download from: <a
+href="http://prdownloads.sourceforge.net/wxwindows/wxGTK-2.6.4.tar.gz">http://prdownloads.sourceforge.net/wxwindows/wxGTK-2.6.4.tar.gz</a></p>
+
+<p>
+2.2. Run the following sequentially in shell:</p>
+
+<p><i>
+gunzip -c wxGTK-2.8.10.tar.gz | tar xopf -</i></p>
+
+<p><i>mkdir buildgtk</i></p>
+
+<p><i>cd buildgtk</i></p>
+
+<p><i>make clean</i></p>
+
+<p><i>../configure --with-gtk --disable-shared</i></p>
+
+<p><i>make</i></p>
+
+<p><i>sudo make installp</i></p>
+
+<p><i>ldconfig</i></p>
+
+<p>3. Install
+boost library</p>
+
+<p>3.1 Download <a
+href="http://sourceforge.net/project/showfiles.php?group_id=7586&amp;package_id=8041">http://sourceforge.net/project/showfiles.php?group_id=7586&amp;package_id=8041</a></p>
+
+<p>
+3.2 In the directory where you want to put the Boost installation, execute</p>
+
+<p><i>tar --bzip2 -xf /path/to/boost_1_42_0.tar.bz2</i></p>
+
+<p>3.3 Issue the following commands in the shell (don't type
+$; that represents the shell's prompt):</p>
+
+<p><i>$ cd path/to/boost_1_42_0</i></p>
+
+<p><i>$ ./bootstrap.sh --help</i></p>
+
+<p>3.4 Select your configuration options and invoke <i>./bootstrap.sh</i>
+again without the <i>--help</i> option. Unless you have write permission in
+your system's <i>/usr/local/</i> directory, you'll probably want to at least
+use <i>$ ./bootstrap.sh --prefix=path/to/installation/prefix</i> to install
+somewhere else. Also, consider using the <i>--show-libraries</i> and <i>--with-library_name</i>
+options to limit the long wait you'll experience if you build everything. </p>
+
+<p>3.5 Finally, execute</p>
+
+<p><i>$ ./bjam install</i></p>
+
+<p>will leave
+Boost binaries in the <i>lib/</i> subdirectory of your installation prefix. You
+will also find a copy of the Boost headers in the <i>include/</i> subdirectory
+of the installation prefix, so you can henceforth use that directory as an
+#include path in place of the Boost root directory.</p>
+
+<p>
+3.6 See <i><a
+href="http://www.boost.org/doc/libs/1_42_0/more/getting_started/unix-variants.html">http://www.boost.org/doc/libs/1_42_0/more/getting_started/unix-variants.html</a>
+</i>&nbsp;for more details.</p>
+
+<p>4. Import the
+project in cisgenome_cfiles into Eclipse to build the static library
+libcisgenome_lib.a</p>
+
+<p>4.1 Right click on the <i>Project Explorer</i>
+pane, click <i>Import</i>.</p>
+
+<p><img border=0 width=422
+height=270 id="Picture 13" src="image010.jpg"></p>
+
+<p>4.2 Select <i>General </i> -&gt; <em>Existing Projects</em> into Workspace</p>
+
+<p><img border=0 width=448
+height=399 id="Picture 14" src="image011.jpg"></p>
+
+<p>4.3 Click on <i>Browse</i>, select the folder <i>cisgenome_cfiles</i>.
+Click <i>Finish</i> to finish import.</p>
+
+<p><img border=0 width=438
+height=477 id="Picture 2" src="image012.jpg"></p>
+
+<p>
+4.4 Right click on <i>cis_genome_lib</i> and click on <i>Build Project</i> to
+build the project.</p>
+
+<p><img border=0 width=407
+height=296 id="Picture 16" src="image013.jpg"></p>
+
+<p>5. Follow the
+similar procedure in 4 with the only difference that in step 4.3, chose the
+folder <i>display_server_pi</i>, Import the project <i>display_server_pi</i>
+into Eclipse, and build the <i>display_server_pi</i> application.</p>
+
+<p><img border=0 width=402
+height=279 id="Picture 17" src="image014.jpg"></p>
+
+<p>Mac<a name="Build_Mac"></a></p>
+
+<p>1. Install wxMac:</p>
+
+1.1. Download from: <a
+href="http://prdownloads.sourceforge.net/wxwindows/wxMac-2.8.10.tar.gz">http://prdownloads.sourceforge.net/wxwindows/wxMac-2.8.10.tar.gz</a></p> 
+<p> 1.2. Run the following sequentially in shell:</p>
+
+<p><i>
+gunzip -c wxMac-2.8.10.tar.gz | tar xopf -</i></p>
+
+<p><i>
+mkdir osx-build</i></p>
+
+<p><i>
+cd osx-build</i></p>
+
+<p><i>
+arch_flags=&quot;-arch i386&quot;</i></p>
+
+<p><i>
+../configure CFLAGS=&quot;$arch_flags&quot; CXXFLAGS=&quot;$arch_flags&quot;
+LDFLAGS=&quot;$arch_flags&quot; OBJCFLAGS=&quot;$arch_flags&quot;
+OBJCXXFLAGS=&quot;$arch_flags&quot; --disable-shared --disable-unicode</i></p>
+
+<p><i>
+make</i></p>
+
+<p><i>
+sudo make install</i></p>
+
+<p>2. Do step 3, 4, 5 as in the case for
+Linux.&nbsp; </p>
+
+</div>
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,40 @@
+0.2.2: June 16, 2016
+	- several minor changes to accomodate the latest GTF files and genome files 
+
+0.2.1: February 9, 2015
+	- generate_transcripts can now handle whole genome in a single fasta file
+	
+0.2.0: March 3, 2014
+	- added support for GTF annotation file
+
+0.1.1: Jan 24, 2013
+	- added support for output BED alignment files
+
+0.1.0: July 22, 2012
+	- added support for SAM aligners
+	- tested with BWA, Bowtie and Bowtie2
+
+0.0.7: October 11, 2010
+	- fixed bug "internal error: locate coordinate failed"
+
+0.0.6: April 21, 2010
+	- fixed bug "internal error: pos not found"
+	
+0.0.5: March 25, 2010
+	- added support for isoform expression
+	- added support for paired-end reads
+
+0.0.4: September 12, 2009
+	- RSAT has been renamed as rSeq, which refers to RNA-Seq Analyzer
+
+0.0.3: August 6, 2009
+	- fixed several bugs
+	- refined Makefile, thank Michael Coleman
+
+0.0.2: April 8, 2009
+	- added seqmap
+	- added >2bp mismatch
+
+0.0.1: February 9, 2009
+	- RSAT 0.0.1 is online
+	

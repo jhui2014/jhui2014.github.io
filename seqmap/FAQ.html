@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+
+<body>
+<p><strong>FAQ for SeqMap: A Tool For Mapping Millions Of Short Sequences To The 
+  Genome</strong></p>
+<p><a href="../index.html">Hui Jiang</a></p>
+<hr>
+<strong></strong> 
+<p><strong>How to quick start?</strong></p>
+<p>1) Download the binary executable file according your platform, or download 
+  the source package and use a standard C++ compiler to generate a executable 
+  file on your machine. For example, using g++:</p>
+<p>g++ -O3 -m64 -o seqmap match.cpp.</p>
+<p>2) Prepare input sequences and reference genome in two <a href="http://en.wikipedia.org/wiki/Fasta_format">FASTA 
+  format</a> files, respectively. For example, file input.fa:</p>
+<p>&gt;1<br>
+  AATATGAAATCGGGCATTCGTAAGA<br>
+  &gt;2<br>
+  AGAAAATCGGACCACAAGAATTGGC</p>
+<p>3) Invoke the program by typing the following command:</p>
+<p>./seqmap 2 input.fa genome.fa output.txt</p>
+<p>For Eland output format: (the default output format is /eland:2)<br>
+  ./seqmap 2 probes.fa trans.fa output.txt /eland (or /eland:n, where n=1,2 or 
+  3)</p>
+<p>Output format for all matches (use option /output_all_matches)<br>
+  TranscriptId TranscriptCoord TranscriptSeq ProbeId ProbeSeq MismatchNumber [Strand]</p>
+<p>Mostly used options:<br>
+  use &quot;./seqmap 3 probes.fa trans.fa output.txt&quot; to search for 3bp mismatches.<br>
+  use option &quot;/cut:1,25&quot; to take the first 25mer of the probes for the 
+  mapping (default is to map the full-length probes).<br>
+  use option &quot;/allow_insdel:1&quot; to allow 1bp insertion/deletion in the 
+  mapping (default is disallowed).<br>
+  use option &quot;/forward_strand&quot; to map to forward strand only (default 
+  is to map to both strands).</p>
+<p><strong>I have a distinct FASTA file for each chromosome, what shall I do?</strong></p>
+<p>Simply concatenate the files to get a single FASTA file. For example, on Unix/Linux 
+  machines, use:</p>
+<p>cat *.fa &gt; genome.fa</p>
+<p><strong>What is the license for SeqMap?</strong></p>
+<p>There is no license require for non-commercial use of SeqMap, which means anyone 
+  can use the source codes, documents or the excutable file of SeqMap free of 
+  charge. For commercial use, please contact the author.</p>
+<p><strong>What platform does SeqMap run on?</strong></p>
+<p> Being written in ANSI C++ source code, SeqMap can be compiled and run on any 
+  platform.</p>
+<p><strong>What are the dependencies? </strong></p>
+<p>It doesn't have any dependencies so that you can just download it and run it 
+  immediately. </p>
+<p><strong>What is it written in? </strong></p>
+<p>It is written in ANSI C++.</p>
+<p><strong>How to get the source code?</strong></p>
+<p>The source code is freely downloadable from the website.</p>
+<p><strong>What input file formats does it support?</strong></p>
+<p>It supports <a href="http://en.wikipedia.org/wiki/Fasta_format">FASTA file 
+  formats</a> for input. Also, input files with each raw DNA sequence per line 
+  is also accepted.</p>
+<p><strong>What output file formats it generates?</strong></p>
+<p>It generates several output formats, which can be set by command line parameters. 
+  By default, it outputs in the Eland format.</p>
+<p><strong>Does SeqMap throw away non-unique mapped targets like Eland?</strong></p>
+<p>No, it doesn't. In output_all_matches mode, all targets will be output. In 
+  /output_statistics or /eland:3 mode, you can set parameter /output_top_matches:N 
+  to keep the top N targets. In /eland:1 or /eland:2 modes, only unique targets 
+  will be output.</p>
+<p><strong>How many mismatch/in/del does SeqMap allow?</strong></p>
+<p>There is a limit set by SeqMap to be maximum 5 mismatches (ins&amp;del included) 
+  and maximum 3 ins&amp;dels. But it is mostly set empirically because usually 
+  the memory usage, running time and number of targets will blow up with parameters 
+  beyond that. </p>
+<p><strong>What is the memory requirement? </strong></p>
+<p>The memory usage varies a lot with the running parameters. Basically, a PC 
+  with 2GB memory can do 3bp-mismatch matching for about 8M reads at a time. We 
+  are mostly running SeqMap on 64-bit machines with 8~16GB memory, where memory 
+  requirement usually is not a big problem.</p>
+<p><strong>When I was runing SeqMap under Linux, there is a error message returned:<br>
+  ./seqmap: error while loading shared libraries: <br>
+  libstdc++.so.6: cannot open shared object file: No such file or directory<br>
+  ./seqmap: /lib/ssa/libstdc++.so.6: version `GLIBCXX_3.4' not found (required 
+  by ./seqmap)</strong></p>
+<p> It seems that you are using an older version of GLIBC than I am using. But 
+  if you download the source codes and compile it on your machine, that should 
+  work.</p>
+<p><strong>If the reference sequence or the probe FASTA file has ambiguous DNA 
+  code such as 'N', 'H', '.', etc, how does seqmap deal with it?<br>
+  </strong><br>
+  By default, SeqMap will try to match probes with 'N', although that particular 
+  position will always be counted as a mismatch. Use option /skip_N to ignore 
+  all probes has letters other than 'A', 'C', 'G' or 'T'. If the reference sequence 
+  has other letters, that position will be skipped. Just try a simple example 
+  and you will know how it works. </p>
+<p><strong>What algorithm does SeqMap use?</strong></p>
+<p>SeqMap is a fast sequence mapping software. Unlike BLAT, SeqMap indexes the 
+  short sequences rather than the genome. Given the numbers of maximum allowed 
+  mutations, insertions and deletions, SeqMap splits the short sequences into 
+  several parts. By keeping some parts rather than all of them to be fixed, the 
+  non-candidates can be eliminated in the very first step. All the candidates 
+  that are left will then be collected and a local alignment algorithm will be 
+  running on them to finally determine the matched targets. Similar algorithm 
+  has been used several times in some papers and softwares (e.g., ELAND by Illumina/Solexa). 
+  However, SeqMap can also do insertion/deletion detection and is very fast. Look 
+  at the SeqMap paper for more details:<br>
+  <a href="http://bioinformatics.oxfordjournals.org/cgi/reprint/btn429v1">Hui 
+  Jiang and Wing Hung Wong (2008)<br>
+  SeqMap : mapping massive amount of oligonucleotides to the genome.<br>
+  Bioinformatics. doi: 10.1093/bioinformatics/btn429</a></p>
+<p><strong>Can SeqMap do a 35-nt search?</strong></p>
+<p>Yes, it maps probes of any length by default.</p>
+<p>Although Solexa usually generates 35-nt tags, the error rate goes up quickly 
+  after the 25th nt, so doing the mapping using the first 25-nt or 30-nt is reasonable 
+  and turns out to be quite successful.</p>
+<p><strong>How to output in genome coordinates order?</strong></p>
+<p>If you want to output in genome coordinates order, you can use option /output_all_matches.</p>
+<p><strong>Can SeqMap run in parallel?</strong></p>
+<p> Yes, the users can simply split the reads into several files or split the 
+  genome into several files (e.g., one FASTA file for each chromosome), and then 
+  invoke several SeqMap processes on a multi-core CPU or a multi-node cluster 
+  to do the mapping in parallel. Depending on the user’s purpose for the mapping, 
+  some simple scripts or programs can be used to combine the mapping results at 
+  the end. We provide a sample C++ code for such purpose <a href="collect_output.cpp">here</a>, 
+  which works for the /output_statistics output format. For the default output 
+  format, just put all the output files together and no more action is needed.</p>
+<p><strong>Are 3 or more mismatches needed for mapping Solexa reads?</strong></p>
+<p>Yes, for reads that are longer than 30nt, the 3bp mismatch mapping gives mostly 
+  true signal rather than noise. We map 11M RNA-Seq reads to mouse chr19 using 
+  2bp and 3bp mismatch mapping, respectively. The mapping results are shown in 
+  the following table, where we can see that 3bp mapping gives 18.5% more uniquely 
+  mapped reads and 42% of them fall into transcribed regions annotated by RefSeq 
+  genes, which occupies only 2~3% of the genome. </p>
+<table width="75%" border="1">
+  <tr> 
+    <td> 
+      <div align="center">mapping</div></td>
+    <td> 
+      <div align="center">uniquely mapped reads</div></td>
+    <td> 
+      <div align="center">reads mapped to transcribed regions</div></td>
+  </tr>
+  <tr> 
+    <td> 
+      <div align="center">2bp mismatch</div></td>
+    <td> 
+      <div align="center">308,095</div></td>
+    <td> 
+      <div align="center">195,986</div></td>
+  </tr>
+  <tr> 
+    <td> 
+      <div align="center">3bp mismatch</div></td>
+    <td> 
+      <div align="center">365,172</div></td>
+    <td> 
+      <div align="center">220,050</div></td>
+  </tr>
+</table>
+<p><br>
+</p>
+<hr>
+(last modified on 
+<!-- #BeginDate format:Am1a -->September 9, 2011 3:49 PM<!-- #EndDate -->
+) 
+</body>
+</html>

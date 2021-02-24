@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>rSeq: RNA-Seq Analyzer</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body>
+<p><strong>Bayesian inference for isoform-specific gene
+expression</strong></p>
+<p>1) Follow the three steps described in the <a href="oldREADME.html#isoform">manual</a> for
+estimating isoform-specific gene expression. In the end you will get a
+file named "output.txt.2.b.matlab".</p>
+<p>2) Download <a href="download/MATLABcodes.zip">the
+MATLAB code</a> for Bayesian inference for isoform-specific gene
+expression. "compute.m" is the main function. Run it with the file
+"output.txt.2.b.matlab" to get the final results. </p>
+<p><strong>The input format of the MATLAB code (bold type
+fonts are comments)</strong></p>
+<p><strong>//file header</strong></p>
+<p>36280005 25 <strong>//#mapped reads, read length</strong></p>
+<p><strong>//for each gene</strong></p>
+<p>Cacnb1 7 2 <strong>//gene name,</strong> <strong>#exons,
+#isoforms</strong><br>
+NM_145121 NM_031173 <strong>//isoform IDs</strong><br>
+462 204 684 20 155 628 217 <strong>//exon lengths</strong><br>
+731 28 1709 0 4 1265 328 <strong>//read counts for exons</strong><br>
+40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 <strong>//junction
+lengths</strong><br>
+0 31 0 0 0 0 7 0 0 0 0 24 0 2 0 0 15 0 0 0 24 <strong>//read
+counts for junctions</strong><br>
+1 0 1 1 0 1 0 <strong>//indicator matrix</strong><br>
+0 1 1 0 1 1 1 </p>
+<p>A sample input file is <a href="example.matlab">here</a></p>
+<p><strong>Some explananation about the variables and
+output of the MATLAB code</strong></p>
+<p> //variables</p>
+<p> // global settings</p>
+<p> NN// number of mapping reads<br>
+Read_len// length of read</p>
+<p> // each iteration for a gene</p>
+<p> name// gene name<br>
+m// number of exons<br>
+n// number of isoforms<br>
+trans// name of each isoforms<br>
+L// length of each exon<br>
+N// number reads mapping on every exon<br>
+L1// the length of each exon-exon junction, the junctions are indexed
+by 1-2, 1-3, ..., (n-1)-n, total n(n-1)/2 of them.<br>
+N1// the number of reads mapping to each junction.<br>
+A// indicator matrix</p>
+<p> //Results</p>
+<p> toyGene 2.694110 2.704110 2.474467 2.944638 //MLE, posterior
+mean, lower and upper bounds of the 95% posterior interval.<br>
+NM_1 1.474805 1.478264 1.314230 1.650764<br>
+NM_2 1.219305 1.225846 1.026216 1.440133<br>
+0.007426 -0.002060 //the posterior covariance matrix of the isoform
+expression <br>
+-0.002060 0.011215 <br>
+</p>
+</body></html>

@@ -1,0 +1,299 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>rSeq: RNA-Seq Analyzer</title>
+
+<link href="../cgb.css" rel="stylesheet" type="text/css"></head>
+<body>
+<p><strong>README for rSeq: RNA-Seq Analyzer</strong></p>
+<p><a href="../index.html">Hui Jiang</a></p>
+<hr>
+<strong>Table of Contents</strong><br>
+<hr>
+<p> <strong><a href="#overview">Introduction</a></strong></p>
+<p><strong> </strong><strong><a href="#usage">Usage</a></strong></p>
+<blockquote>
+<p><a href="#download">Download and install</a></p>
+<p><a href="#isoform">Gene and isoform expression
+estimation<br>
+</a></p>
+</blockquote>
+<p><strong> </strong><strong><a href="#license">License</a></strong></p>
+<p><strong><a href="#method">Method and
+References</a></strong></p>
+<p><strong><a href="#acknowledgements">Acknowledgements
+</a></strong></p>
+<hr>
+<p><strong><a name="overview" id="overview"></a>Introduction</strong></p>
+<p style="margin-left: 40px;">rSeq is a set of tools for
+RNA-Seq data analysis. It consists
+of programs that deal with many aspects of RNA-Seq data analysis, such
+as reference sequence generation, sequence mapping, gene and isoform
+expressions (RPKMs) computation, etc. There are also many other
+features that will be gradually added into rSeq in the future.</p>
+<p><strong><a name="usage" id="usage"></a>Usage</strong></p>
+<p style="margin-left: 40px;"><strong><a name="download" id="download"></a>Download
+and install</strong></p>
+<p style="margin-left: 80px;">Simply download the zipped
+file from the rSeq website and
+unzip the file to somewhere on the hard drive. If
+you&nbsp;downloaded
+the source code, simply type "<span style="font-style: italic;">make</span>"
+to compile it. You will need a recent C++ compiler which supports C++11
+standard.</p>
+<p style="margin-left: 40px;"><strong><a name="gene" id="gene"></a>Gene
+and isoform expression estimation</strong></p>
+<p style="margin-left: 80px;">The procedure for gene and
+isoform expression estimation consists of three
+steps: transcript sequence preparation, read mapping
+and&nbsp;expression estimation.</p>
+<p style="margin-left: 80px;">Note:
+since rSeq 0.1.0&nbsp;a&nbsp;new way for generating transcripts
+and
+estimating gene and isoform expression values is used. The old way
+(here are the old <a href="oldREADME.html">user manual</a>
+and old <a href="oldFAQ.html">FAQ</a><span style="text-decoration: underline;"></span>) is still
+supported but not recommended.</p>
+<p style="margin-left: 80px;"><strong>[1] Prepare
+transcript sequences. </strong></p>
+<p style="margin-left: 120px;">Transcript sequences should
+be stored in a file in the <a href="http://en.wikipedia.org/wiki/FASTA_format">FASTA format</a>.
+Name different transcripts (isoforms) of a gene as
+gene_name$$isoform_id such as&nbsp;WASH5P$$NR_024540 and <a href="sample1.fa">here</a> is
+an&nbsp;example. Note:
+gene_name will be the index used by rSeq to output gene expression. So
+if you want something other than gene names, such as Entrez gene ID,
+you should use them in the transcript sequence file.</p>
+<p style="margin-left: 120px;">If you can prepare transcripts according to the above format then you can jump to step 2 directly. rSeq also provides two methods
+for transcript sequence generation. The first method is easier but it only works with the UCSC refFlat annotation. The second method is slightly more complicated but it is recommended, and it works with gene annotation in the GTF format (e.g., the ENCODE annotation), UCSC refFlat format and UCSC KnownGene format (BED format). The
+second&nbsp;method is also required to generated alignment results in BED files (described in more details in a later section).</p>
+<ul style="margin-left: 120px;">
+<li>Method 1)<span style="font-weight: bold;"> </span>Transcript
+sequences for many species can be downloaded from the UCSC
+genome browser. For example, weekly updated human RefSeq mRNA sequences
+from
+GenBank can be download at <a href="http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/refMrna.fa.gz">http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/refMrna.fa.gz</a>.
+Then you need to convert the transcript sequence names downloaded from
+the UCSC genome
+browser in the format needed by rSeq by running rSeq with the following
+command:</li>
+</ul>
+<p style="font-style: italic; margin-left: 160px;">rseq&nbsp;annotate_transcripts
+refMrna.fa kgXref.txt</p>
+<p style="margin-left: 160px;">Where
+"<span style="font-style: italic;">refMrna.fa</span>"
+is the unzipped file containing transcript sequence
+downloaded from the UCSC genome browser. "<span style="font-style: italic;">kgXref.txt</span>" is the
+unziped file
+containing the gene name/transcript id corresponding table also
+download from the UCSC genome browser. For human genome, it is at <a href="http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/kgXref.txt.gz">http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/kgXref.txt.gz</a>.
+When finished, you will get a "<span style="font-style: italic;">refMrna.fa.new.fa</span>"
+file, which
+contains all the annotated transcript sequences in FASTA format.</p>
+<ul style="margin-left: 120px;">
+<li>Method 2) Download gene&nbsp;annotation file in<span class="Apple-converted-space">&nbsp;</span><a href="http://genome.ucsc.edu/goldenPath/gbdDescriptionsOld.html#RefFlat">UCSC
+refFlat format</a>, UCSC known Gene format (BED format) or the GTF format (e.g., the ENCODE annotation). As an example, the refFlat format annotation
+file for hg19 can be downloaded at<span class="Apple-converted-space">&nbsp;</span><a href="http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/refFlat.txt.gz">http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/refFlat.txt.gz</a><span style="font-style: italic;">.</span>Also
+download the genome sequences. For example, the genome sequences of all
+the chromosomes for hg19 can be downloaded at<span class="Apple-converted-space">&nbsp;</span><a href="http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz">http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz</a>. You can then generate transcript sequences in the format needed by rSeq by running rSeq with the following command (here I used the refFlat format as an example, but it should also work for annotation files in GTF format or BED format).<br>
+</li>
+</ul>
+<p style="margin-left: 160px;"><span style="font-style: italic;">rseq
+generate_transcripts
+refFlat.txt chrfilelist.txt</span><br>
+</p>
+<p style="margin-left: 160px;">where
+"<span style="font-style: italic;">refFlat.txt</span>"
+is the annotation file in<span class="Apple-converted-space">&nbsp;</span><a href="http://genome.ucsc.edu/goldenPath/gbdDescriptionsOld.html#RefFlat">UCSC
+refFlat format</a> and "<span style="font-style: italic;">chrfilelist.txt</span>"
+is the list of filenames
+of DNA sequences of all the chromosomes. And&nbsp;<a href="chrfilelist.txt">here</a> is
+an&nbsp;example. When
+finished, you will get a "<span style="font-style: italic;">refFlat.txt.fa</span>&quot; file, which contains all the transcript sequences in FASTA format.</p>
+    <p style="margin-left: 160px;">Note: starting from rSeq 0.2.1, generate_transcripts also accepts the whole genome in a single fasta file, i.e.</p>
+    <p style="margin-left: 160px;"><span style="font-style: italic;">rseq
+generate_transcripts
+refFlat.txt genome.fasta</span></p>
+<p style="margin-left: 160px;">From
+now on I will demonstrate using&nbsp;rSeq with transcript sequences
+generated with method 1. If you are using method 2,
+simply replace all the "<span style="font-style: italic;">refMrna.fa.new</span><span style="font-style: italic;">.fa" </span>with<span style="font-style: italic;"> "</span><span style="font-style: italic;">refFlat.txt.fa</span><span style="font-style: italic;">" </span>in the command
+lines.</p>
+<p style="margin-left: 80px;"><strong>[2] Map the
+reads to the transcript sequences. </strong></p>
+<p style="margin-left: 120px;">The rSeq package includes <a href="../seqmap/">SeqMap</a>
+as the default aligner, which usually works well with ~10M reads for
+desktop PCs with 2GB memory. For larger data sets, you can either use a
+computer
+with larger memory or split the read file into several files, map each
+file respectively and then
+concatenate the final mapping results as one single file.&nbsp;</p>
+<p style="margin-left: 120px;">If you can handle it technically, it is recommended that you 
+use other
+aligners which output in either&nbsp;the <a href="http://samtools.sourceforge.net/SAM1.pdf">SAM format</a>
+or the <a href="http://seqanswers.com/forums/showthread.php?t=2313">Eland-multi
+format</a>.
+We have
+tested rSeq with SeqMap, Eland, <a href="http://bio-bwa.sourceforge.net/">BWA</a>, <a href="http://bowtie-bio.sourceforge.net/index.shtml">Bowtie</a>
+and <a href="http://bowtie-bio.sourceforge.net/bowtie2/index.shtml">Bowtie2</a>.
+Aligners other than SeqMap need to be installed by yourself. Simply
+go
+to the aligner's website and follow its instructions to download and
+install it. Each aligner has its own options and features. Here I only
+summarize the most basic usage of a few aligners. For better control of
+the alignment procedure or advanced features, please follow the user
+manual of the particular aligner that you are using.</p>
+<ul style="margin-left: 120px;">
+<li>For&nbsp;SeqMap (provided togetherthe rSeq package),
+use the following command,</li>
+</ul>
+<p style="margin-left: 160px;"><span style="font-style: italic;">seqmap 2 reads.input&nbsp;</span><span style="font-style: italic;">refMrna.fa.new</span><span style="font-style: italic;">.fa reads.mapped.output /eland:3</span></p>
+<p style="margin-left: 160px;"><span style="font-style: italic;"></span>Where "<span style="font-style: italic;">reads.input</span>" is the
+file containing the sequencing reads (in plain
+read sequences,&nbsp;FASTA or FASTQ format, see <a href="../seqmap/Docs.txt">SeqMap's user manual</a> for
+more details).&nbsp;<span style="font-style: italic;">refMrna.fa.new</span><span style="font-style: italic;">.fa</span>" is the
+annotated transcript sequence file. "<span style="font-style: italic;">reads.mapped.output</span>"
+is the output file. For paired-end reads,&nbsp;map the two files
+for
+each end separately. Please refer to&nbsp;SeqMap's user manual for
+more
+options.</p>
+<ul style="margin-left: 120px;">
+<li>For&nbsp;BWA, first use the following command to index
+the transcript sequences:</li>
+</ul>
+<p style="font-style: italic; margin-left: 160px;">bwa
+index&nbsp;<span style="font-style: italic;">refMrna.fa.new</span>.fa</p>
+<p style="margin-left: 160px;">Then use the following
+commands to align single-end reads:<br>
+</p>
+<p style="margin-left: 160px;"><span style="font-style: italic;">bwa aln&nbsp;</span><span style="font-style: italic;">refMrna.fa.new</span><span style="font-style: italic;">.fa reads.fastq &gt;
+reads.bwa.sai<br>
+bwa samse -n 100 -f reads.mapped.sam&nbsp;</span><span style="font-style: italic;">refMrna.fa.new</span><span style="font-style: italic;">.fa reads.bwa.sai reads.fastq</span></p>
+<p style="margin-left: 160px;">Where "<span style="font-style: italic;">reads.fastq</span>"
+is the read file in the <a href="http://en.wikipedia.org/wiki/FASTQ_format">FASTQ format</a>.
+BWA (and Bowtie and Bowtie2) also
+accept FASTQ or other input formats.&nbsp;See their user manuals
+for the usages.&nbsp;"<span style="font-style: italic;">reads.mapped.sam</span>"
+is the output file in SAM format. For paired-end reads, either map
+files for each end separately, or&nbsp;use the following commands:<br style="font-style: italic;">
+</p>
+<p style="margin-left: 160px;"><span style="font-style: italic;">bwa aln&nbsp;</span><span style="font-style: italic;">refMrna.fa.new</span><span style="font-style: italic;">.fa reads_1.fastq &gt;
+reads_1.bwa.sai<br>
+<span style="font-style: italic;">bwa aln&nbsp;</span></span><span style="font-style: italic;">refMrna.fa.new</span><span style="font-style: italic;"><span style="font-style: italic;"></span>.fa reads_2.fastq
+&gt; reads_2.bwa.sai<br>
+bwa sampe -a 10000 -n 100 -f reads.mapped.sam&nbsp;</span><span style="font-style: italic;">refMrna.fa.new</span><span style="font-style: italic;">.fa reads_1.bwa.sai
+reads_2.bwa.sai reads_1.fastq reads_2.fastq</span></p>
+<p style="margin-left: 160px;"><span style="font-style: italic;"><span style="font-style: italic;"></span></span>Please
+refer to <a href="http://bio-bwa.sourceforge.net/bwa.shtml">BWA's
+user manual</a> for&nbsp;more options.<span style="font-style: italic;"><span style="font-style: italic;"></span></span></p>
+<ul style="margin-left: 120px;">
+<li>For&nbsp;Bowtie, first use the following command to
+index the transcript sequences:</li>
+</ul>
+<p style="font-style: italic; margin-left: 160px;">bowtie-build&nbsp;<span style="font-style: italic;">refMrna.fa.new</span>.fa&nbsp;<span style="font-style: italic;">refMrna.fa.new</span>.fa</p>
+<p style="margin-left: 160px;">Then use the following
+command to align single-end reads:</p>
+<p style="margin-left: 160px;"><span style="font-style: italic;">bowtie -k 100 -S&nbsp;</span><span style="font-style: italic;">refMrna.fa.new</span><span style="font-style: italic;">.fa reads.fastq reads.mapped.sam</span></p>
+<p style="margin-left: 160px;"><span style="font-style: italic;"></span>For paired-end
+reads, either map files for each end separately, or&nbsp;use the
+following command:</p>
+<p style="margin-left: 160px;"><span style="font-style: italic;">bowtie -k 100 -S&nbsp;</span><span style="font-style: italic;">refMrna.fa.new</span><span style="font-style: italic;">.fa -1 reads_1.fastq -2
+reads_2.fastq reads.mapped.sam</span><br>
+<span style="font-style: italic;"></span><br>
+Please refer to <a href="http://bowtie-bio.sourceforge.net/manual.shtml">Bowtie's
+user manual</a> for&nbsp;more options.</p>
+<ul style="margin-left: 120px;">
+<li>For&nbsp;Bowtie2, first use the following command to
+index the transcript sequences:<br>
+</li>
+</ul>
+<p style="font-style: italic; margin-left: 160px;">bowtie2-build&nbsp;<span style="font-style: italic;">refMrna.fa.new</span>.fa&nbsp;<span style="font-style: italic;">refMrna.fa.new</span>.fa</p>
+<p style="margin-left: 160px;">Then use the following
+command to align single-end reads:</p>
+<p style="margin-left: 160px;"><span style="font-style: italic;">bowtie2 -x&nbsp;</span><span style="font-style: italic;">refMrna.fa.new</span><span style="font-style: italic;">.fa<span style="font-style: italic;"> -U reads.fastq -S
+reads.mapped.sam</span></span></p>
+<p style="margin-left: 160px;"><span style="font-style: italic;"></span>For paired-end
+reads, either map files for each end separately, or&nbsp;use the
+following command:</p>
+<p style="margin-left: 160px;"><span style="font-style: italic;">bowtie2 -x&nbsp;</span><span style="font-style: italic;">refMrna.fa.new</span><span style="font-style: italic;">.fa -1 reads_1.fastq -2
+reads_2.fastq -S reads.mapped.sam</span><br>
+<span style="font-style: italic;"></span><br>
+Please refer to <a href="http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml">Bowtie2's
+user manual</a> for&nbsp;more options.</p>
+<ul style="margin-left: 120px;">
+<li>For Eland (provided by Illumina), run with option
+"--multi", i.e.,</li>
+</ul>
+<p style="font-style: italic; margin-left: 160px;">eland
+reads.txt&nbsp;<span style="font-style: italic;">refMrna.fa.new</span>.fa.squashed/
+reads.mapped.output --multi</p>
+<p style="margin-left: 160px;">Where&nbsp;"<span style="font-style: italic;">reads.txt</span>" is the
+file of the sequence reads&nbsp;in plain
+read sequences.&nbsp;<span style="font-style: italic;">refMrna.fa.new</span><span style="font-style: italic;">.fa.squahshed/</span>" is
+the directory containing
+the squashed sequences generated with the "<span style="font-style: italic;">squashGenome</span>" tool
+in the
+Eland package. For paired-end reads, either map files for each end
+separately.</p>
+<p style="margin-left: 80px;"><strong>[3] Compute
+gene and isoform expressions.</strong>&nbsp;</p>
+<p style="margin-left: 120px;">Use
+the following command:</p>
+<p style="margin-left: 120px;"><span style="font-style: italic;">rseq
+expression_analysis&nbsp;</span><span style="font-style: italic;">refMrna.fa.new</span><span style="font-style: italic;">.fa mapped.reads.output1 [</span><span style="font-style: italic;">mapped.reads.output2</span><span style="font-style: italic;">]</span></p>
+<p style="margin-left: 120px;"><span style="font-style: italic;"><span style="font-style: italic;"><span style="font-style: italic;"></span></span></span>where "<span style="font-style: italic;">mapped.reads.output1</span>"<span style="font-style: italic;"> </span>(and
+also <span style="font-style: italic;">mapped.reads.output2</span>
+for paired-end reads when<span style="font-style: italic;"></span>
+each ends are mapped individually) are the output
+files from the aligners, in&nbsp;either the Eland-multi format or
+the
+SAM format.&nbsp;When finished, you will get an output file:
+"<span style="font-style: italic;">mapped.reads.output1.exp.xls</span>"
+(together with several other files for diagnostic purpose which you
+should simply ignore). It contains the estimated gene and isoform
+expression values, indexed by gene names and isoform IDs. It is a
+tab-delimited
+text file with one gene per line and can be opened by any text editor
+or Excel. For example, the following line means
+that gene SDF4 has an expression estimate 103.293, in the unit of <a href="http://www.clcbio.com/manual/genomics/Definition_RPKM.html">RPKM</a>.
+The gene has two isoforms
+NM_016547 and NM_016176 with expression estimates 0 and 103.293
+respectively.</p>
+<p style="margin-left: 120px;">SDF4&nbsp;&nbsp;&nbsp;
+103.293&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;
+NM_016547,NM_016176&nbsp;&nbsp;&nbsp; 0,103.293</p>
+<p style="margin-left: 120px;"><a href="sample.exp.xls">Here</a>
+is
+an example of the output file.</p><p style="margin-left: 80px;"><strong>[4] Generate BED alignment file.</strong></p>
+<p style="margin-left: 120px;">rSeq can generate alignment file in <a href="http://genome.ucsc.edu/FAQ/FAQformat.html#format1">UCSC BED format</a>, which can be visualized in <a href="http://genome.ucsc.edu/cgi-bin/hgGateway">UCSC Genome Browser</a> as a custom track or in <a href="../browser/">CisGenome Browser</a>. Use
+the following command:</p>
+<p style="margin-left: 120px;"><span style="font-style: italic;">rseq
+expression_analysis -a refFlat.txt refFlat.txt</span><span style="font-style: italic;">.fa mapped.reads.output1 [</span><span style="font-style: italic;">mapped.reads.output2</span><span style="font-style: italic;">]</span></p><p style="margin-left: 120px;">where "<span style="font-style: italic;">refFlat.txt</span>" is the gene annotation file in UCSC refFlat format and&nbsp;"<span style="font-style: italic;">refFlat.txt.fa</span>" is the transcript sequence file&nbsp;generated using with the second method, i.e., "<span style="font-style: italic;">rseq
+generate_transcripts
+refFlat.txt chrfilelist.txt</span>". When finished,&nbsp;you will get a "<span style="font-style: italic;">mapped.reads.output1.reads.bed</span>"
+file, which contains all the uniquely aligned reads in UCSC BED Format. <a href="screenshot1.png">Here</a>
+and&nbsp;<a href="screenshot2.png">Here</a> are two schreenshots of&nbsp;visualizing aligned paired-end RNA-Seq reads in CisGenome Browser.</p>
+<p><strong><a name="license" id="license"></a>License</strong></p>
+<p style="margin-left: 40px;">Anyone can use the source
+codes, documents or the excutable
+file of rSeq free of charge for non-commercial use. For commercial use,
+please contact the <a href="../index.html">author</a>.</p>
+<p><strong><a name="method" id="method"></a>Method
+and References</strong><br>
+</p>
+<p style="margin-left: 40px;">For isoform-specific gene
+expression estimation, rSeq uses the
+method described in</p>
+<p style="margin-left: 40px;">Jiang, H., Wong, W.H. (2009)
+Statistical Inferences for
+Isoform Expression in RNA-Seq, <em>Bioinformatics</em>,
+25(8), 1026&#8211;1032. <font color="#003399" size="-1">[<a href="http://bioinformatics.oxfordjournals.org/cgi/content/full/25/8/1026">online</a>]</font></p>
+<p style="margin-left: 40px;">For paired-end RNA-Seq
+analysis, rSeq uses the method
+described in</p><p style="margin-left: 40px;">Salzman, J., Jiang, H.,
+Wong, W. H. (2011) Statistical
+Modeling of RNA-Seq Data, <em>Statistical Science</em>, 26
+(1): 62-83. <font size="-1"><font color="#003399">[<a href="http://projecteuclid.org/DPubS?verb=Display&amp;version=1.0&amp;service=UI&amp;handle=euclid.ss/1307626566&amp;page=record">online</a>][<a href="http://arxiv.org/abs/1106.3211">arxiv</a>]</font></font><br></p><p><strong><a name="acknowledgements" id="acknowledgements"></a>Acknowledgements </strong></p>
+<p style="margin-left: 40px;">rSeq was developed and
+tested with the help of the members and
+several collaborators of the Wong lab.</p>
+</body></html>
