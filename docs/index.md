@@ -59,6 +59,10 @@ technologies.</p>
 <ul>
   <li>
        <p class="p2">
+           <span class="auto-style3">Wang M, Fontaine S, Jiang H, Li G (2024) ADAPT: Analysis of Microbiome Differential Abundance by Pooling Tobit Models</span><br class="auto-style3"><span class="auto-style2">Bioinformatics</span><span class="auto-style3">. [<a href="https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btae661/7885158">online</a>]</span><span class="auto-style3">[<a href="https://github.com/mkbwang/ADAPT_example">code</a>]</span></p>
+   </li>
+   <li>
+       <p class="p2">
            <span class="auto-style3">Tran L, Li G, Luo L, Jiang H (2024) A fast solution to the lasso problem with equality constraints</span><br class="auto-style3"><span class="auto-style2">Journal of Computational and Graphical Statistics</span><span class="auto-style3">, 33 (3): 804-813. [<a href="https://doi.org/10.1080/10618600.2023.2277877">online</a>]</span><span class="auto-style3">[<a href="https://github.com/lamttran/ECLasso">code</a>]</span></p>
    </li>
      <li>
