@@ -1,0 +1,3 @@
+- Support Pair-End tags
+- Support read quality
+- Improve search speed and reduce memory usage

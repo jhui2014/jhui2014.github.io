@@ -1,0 +1,92 @@
+Revisions:
+
+1.1.3: May 4, 2010
+	- Updated program to match 1.0.14
+	- BAM format supported
+
+1.0.14: May 4, 2010
+	- Some minor improvements
+
+1.1.2: Feb 7, 2010
+	- Updated program to match 1.0.13
+	
+1.1.1: Feb 3, 2010
+	- Updated readme file
+
+1.0.13: Jan 27, 2010
+	- Fixed several bugs
+	- Added several new functions: customizable gene track max height, etc
+
+1.1.0: November 30, 2009
+	- Now supports Windows, Linux and Mac. Thanks to Fan Wang's work.
+
+1.0.12: August 28, 2009
+	- fixed unable to get file name problem on latext browsers, thanks Fan Wang's work
+	- Added support for bed format gene annotation
+	- Added support for bedGraph format region file
+
+1.0.11: Sept 18, 2008
+	- parallel UCSC view
+	- hide/unhide tracks
+	- some minor improvements
+
+1.0.10: May 14, 2008
+	- javascript popup menus
+	- better browsing, regional zoom
+	- links to UCSC, NCBI, Ensembl
+
+1.0.9: April 22, 2008
+	- fixed several bugs
+	- draw circle
+	- color codes customizable in config files
+	- session ini file simplification
+
+1.0.8: April 1, 2008
+	- several safety adjustments
+	- faster drawing
+	- refined log files
+	- input validity check
+
+1.0.7: March 28, 2008
+	- better genefile display
+	- not cache genefile by default
+	- local_only by default
+	- restrict file retrieval for safety
+	- easy fold/unfold
+	- track folded tracks
+
+1.0.6: March 27, 2008
+	- fix gene display and search bugs
+	- cache genefiles
+	- new CEL format support
+	- new multiple motif file support
+
+1.0.5: March 23, 2008
+	- font, page margin customizable
+	- add display_data
+
+1.0.4: March 18, 2008
+	- local and remote clients
+	- automatic update binary files when text files change
+	- server setting
+	- cancel buttons
+
+1.0.3: March 10, 2008
+	- Fixed draw_motif bug, thanks David Hiller for discoverying this bug
+
+1.0.2: March 6, 2008
+	- Fixed draw_cel bug, thanks Weihong Xu for discovering this bug
+
+1.0.1: March 5, 2008
+	- Fixed exon numbering.
+	- Added batch changing signal width
+	- Added always include zero in plot
+	- Added horizontal grid line for zero value
+	- Added searching genes in selected tracks
+
+1.0.0: February 28, 2008
+	- Put online.
+
+0.0.1: August 2, 2007 to 0.0.96-February 6, 2008
+	- Prototype implementation
+	
