@@ -63,7 +63,7 @@ technologies.</p>
   </li>
   <li>
        <p class="p2">
-           <span class="auto-style3">Wang D, Ye W, Sung R, Jiang, H, Taylor JMG, Ly L, He K (2025) Kullback-Leibler-based discrete failure time models for integration of published prediction models with new time-to-event dataset </span><br class="auto-style3" /><span class="auto-style2">Annals of Applied statistics</span><span class="auto-style3">, 19 (2): 1167-1189. [<a href="https://projecteuclid.org/journals/annals-of-applied-statistics/volume-19/issue-2/Kullback-Leibler-based-discrete-failure-time-models-for-integration-of/10.1214/24-AOAS1955.short">online</a>]</span><span class="auto-style3">[<a href="https://github.com/UM-KevinHe/DiscreteKL">code</a>]</span></p>
+           <span class="auto-style3">Wang D, Ye W, Sung R, Jiang H, Taylor JMG, Ly L, He K (2025) Kullback-Leibler-based discrete failure time models for integration of published prediction models with new time-to-event dataset </span><br class="auto-style3" /><span class="auto-style2">Annals of Applied statistics</span><span class="auto-style3">, 19 (2): 1167-1189. [<a href="https://projecteuclid.org/journals/annals-of-applied-statistics/volume-19/issue-2/Kullback-Leibler-based-discrete-failure-time-models-for-integration-of/10.1214/24-AOAS1955.short">online</a>]</span><span class="auto-style3">[<a href="https://github.com/UM-KevinHe/DiscreteKL">code</a>]</span></p>
    </li>
   <li>
    <p class="p2">
