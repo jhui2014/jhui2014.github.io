@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+<title>rSeq: RNA-Seq Analyzer</title><meta http-equiv="Content-Type" content="text/html; charset=gb2312"></head>
+<body>
+<p><strong>FAQ for rSeq: </strong><strong>RNA-Seq Analyzer</strong></p>
+<p><a href="../index.html">Hui Jiang</a></p>
+<hr>
+<strong></strong> 
+<p><strong>You've developed a Baysian approach to estimate confidence intervals 
+  for isoform expression estimates in the paper "Statistical Inferences for 
+  Isoform Expression in RNA-Seq". Is that algorithm implemented in rSeq?</strong></p>
+<p>Yes or No. That work was written in MATLAB therefore is not part of rSeq yet. 
+  I am also planning to&nbsp;write an R package that does the job. For the MATLAB 
+  code that does Bayesian inference, please follow the instructions <a href="bayesian.html">here</a>.</p><p><strong>How much memory does rSeq need?</strong></p>
+<p>Usually 2GB memory should be sufficient. For more than 10M reads,
+SeqMap may need more than 2GB memory, which usually requires a 64-bit
+system. To reduce memory usage, you can split the read file into two or
+more parts and map each part separately and then concatenate the
+mapping results. You can also use other aligners such as Eland, BWA,
+Bowtie and Bowtie2.</p>
+<p><strong>How can I splite the read file and combine the results?</strong></p>
+<p>Use linux command "split" to split the reads, "cat" to 
+  concatenate the results.</p>
+<p><strong>What SeqMap does with duplicate reads? does it count them in the output 
+  but just leave them out of the alignment?</strong></p>
+<p>SeqMap finds all the duplicate reads, maps one of them, and replicates the 
+  result for the rest of them. So no worries, all of them are there in the output 
+  file. For more questions about SeqMap, please refer to its <a href="../seqmap">website</a>.</p>
+<p><strong>Are the mapping results in SeqMap output in strict order? I'm planning 
+  to split my reads data into several pieces, map them with SeqMap and combine 
+  the results as input to rSeq. I'm wondering whether this partition will break 
+  the structure in SeqMap output file.</strong></p>
+<p>Yes, they are in strict order. You can go ahead splitting the data files. </p>
+<p><strong>Can rSeq compute expressions on SeqMap data run with a 3 or more bp mismatch 
+  allowance?</strong></p>
+<p>Yes, simply run rSeq with option "-n k" where k is the number of mismatches allowed.</p><p><strong>I am mapping some reads to a hg18 fasta file and I’m getting this message 
+  as seqmap runs: </strong><strong>"......Bad charactor R found when processing 
+  transcript chr16_random. Skipped......." </strong><strong>What does this 
+  mean? Is it skipping the entire chromosome? Or just that bp?</strong></p>
+<p>No worries. Only that base is skipped.</p>
+<p><strong>I got the following error in running SeqMap:</strong><strong><br>
+  bad format in line: @SRR002051.1 :8:1:325:773 length=33 AAAGAACATTAAAGCTATATTATAAGCAAAGAT 
+  NM<br>
+  internal error: read file failed</strong></p>
+<p>It is because you have space in your read tag "@SRR002051.1 :8:1:325:773 
+  length=33". Changing it to ""@SRR002051.1" should solve 
+  the problem. You should use /eland:3 in the mapping.</p>
+<p><strong>SeqMap told me that there is not enough memory but actually I have.</strong></p>
+<p>Sometimes SeqMap has some trouble detection the real available memory. If you are sure 
+  that is the case you can turn it off by using option "/available_memory:8000" 
+  to specify&nbsp;8G available memory as in the example. </p><p><strong>What makes rSeq any different than ERANGE, Cufflinks and others?</strong></p>
+
+
+<p>rSeq is a set of tools for RNA-Seq analysis, including quality
+control, sequence alignment, gene and isoform expression calculation
+and so on. rSeq maps the reads to transcript sequences rather than
+genome as done in ERANGE, Cufflinks and other, which can help reduce
+multi-reads, reduce running time, fully exploit splice reads and etc.
+For isoform expression, rSeq uses the approach described in
+"Statistical Inferences for isoform expression in RNA-Seq",
+Bioinformatics, 25(8):1026-1032, (2009).&nbsp;For paired-end RNA-Seq
+analysis, rSeq uses the method
+described in&nbsp;"Statistical
+Modeling of RNA-Seq Data",&nbsp;Statistical Science, 26(1):62-83,
+(2011).</p><strong>What command will tell me the rSeq version I’m using?</strong>
+<p>Sorry, no such command yet. To make sure that you are using the latest version, 
+  you can download it again from the website.</p>
+<p><strong>Does rSeq do de novo isoform discovery?</strong></p>
+<p>No, it does not. For de novo splicing event discovery, you can try <a href="http://www.stanford.edu/group/wonglab/SpliceMap/">SpliceMap</a>.</p>
+<p><strong>Can I use other mapping softwares with rSeq?</strong></p>
+<p>Yes, right now&nbsp;SeqMap, Eland, BWA, Bowtie and Bowtie2 are
+tested to work with rSeq. In priciple, any aligner which outputs in either Eland-multi or SAM
+format will work with rSeq.</p><strong>Does rSeq output per exon RPKMs?</strong>
+<p>No, it does not.</p>
+<p><strong>Does rSeq do differential expression?</strong></p>
+<p>Not yet. It's&nbsp;my next thing to do.<br></p> 
+</body></html>

@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>rSeq: RNA-Seq Analyzer</title></head>
+<body>
+<p><strong>README for rSeq: RNA-Seq Analyzer (for rSeq
+version 0.0.7, not recommended)</strong></p>
+<p><a href="../index.html">Hui Jiang</a></p>
+<hr>
+<strong>Table of Contents</strong><br>
+<hr>
+<p> <strong><a href="#overview">Overview</a></strong></p>
+<p><strong> </strong><strong><a href="#usage">Usage</a></strong></p>
+<blockquote>
+<p><a href="#download">Download and install</a></p>
+<p><a href="#gene">Gene expression estimation</a></p>
+<p><a href="#isoform">Isoform-specific gene
+expression estimation</a></p>
+<p><a href="#paired">Paired-end RNA-Seq</a></p>
+</blockquote>
+<p><strong> </strong><strong><a href="#license">License</a></strong></p>
+<p><strong><a href="#method">Method</a></strong></p>
+<p><strong><a href="#acknowledgements">Acknowledgements
+</a></strong></p>
+<hr>
+<p><strong><a name="overview" id="overview"></a>Overview</strong></p>
+<p>rSeq is a set of tools for RNA-Seq data analysis. It consists
+of programs that deal with many aspects of RNA-Seq data analysis, such
+as reference sequence generation, sequence mapping, gene and isoform
+expressions (RPKMs) computation, etc. There are also many other
+features that will be gradually added into rSeq in the future.</p>
+<p><strong><a name="usage" id="usage"></a>Usage</strong></p>
+<p><strong><a name="download" id="download"></a>Download
+and install</strong></p>
+<p>Simply download the zipped file from the rSeq website and
+unzip the file to somewhere on the hard drive. If you are downloading
+the source code files, simply type "make" to compile it.</p>
+<p><strong><a name="gene" id="gene"></a>Gene
+expression estimation</strong></p>
+<p>The procedure of gene expression estimation consists of three
+steps: transcript sequence preparation, read mapping and gene
+expression estimation.</p>
+<p><strong>[1] Prepare transcript sequences. </strong></p>
+<p>Transcript sequences should be in a file of <a href="http://en.wikipedia.org/wiki/FASTA_format">FASTA format</a>.
+Here is an example:</p>
+<p>&gt;WASH5P<br>
+CCTGCACAGCTAGAGATCCTTTATTAAAAGCACACTGTTGGTTTCTGCTC<br>
+AGTTCTTTATTGATTGGTGTGCCGTTTTCTCTGGAAGCCTCTTAAGAACA<br>
+CAGTGGCGCAGGCTGGGTGGAGCCGTCCCCCCATGGAGCACAGGCAGACA<br>
+GAAGTCCCCGCCCCAGCTGTGTGGCCTCAAGCCAGCCTTCCGCTCCTTGA<br>
+AGCTGGTCTCCACACAGTGCTGGTTCCGTCACCCCCTCCCAAGGAAGTAG<br>
+GTCTGAGCAGCTTGTCCTGGCTGTGTCCATGTCAGAGCAACGGCCCAAGT<br>
+CTGGGTCTGGGGGGGAAGGTGTCATGGAGCCCCCTACGATTCCCAGTCGT<br>
+CCTCGTCCTCCTCTGCCTGTGGCTGCTGCGGTGGCGGCAGAGGAGGGATG<br>
+GAGTCTGACACGCGGGCAAAGGCTCCTCCGGGCCCCTCACCAGCCCCAGG<br>
+TCCTTTCCCAGAGATGCCCTTGCGCCTCATGACCAGCTTGTTGAAGAGAT </p>
+<p>If a gene has several transcripts (isoforms), name the
+transcripts as gene_id$$transcript_id, such as</p>
+<p>&gt;WASH5P$$NR_024540<br>
+CCTGCACAGCTAGAGATCCTTTATTAAAAGCACACTGTTGGTTTCTGCTC<br>
+AGTTCTTTATTGATTGGTGTGCCGTTTTCTCTGGAAGCCTCTTAAGAACA<br>
+CAGTGGCGCAGGCTGGGTGGAGCCGTCCCCCCATGGAGCACAGGCAGACA<br>
+GAAGTCCCCGCCCCAGCTGTGTGGCCTCAAGCCAGCCTTCCGCTCCTTGA<br>
+AGCTGGTCTCCACACAGTGCTGGTTCCGTCACCCCCTCCCAAGGAAGTAG<br>
+GTCTGAGCAGCTTGTCCTGGCTGTGTCCATGTCAGAGCAACGGCCCAAGT<br>
+CTGGGTCTGGGGGGGAAGGTGTCATGGAGCCCCCTACGATTCCCAGTCGT<br>
+CCTCGTCCTCCTCTGCCTGTGGCTGCTGCGGTGGCGGCAGAGGAGGGATG<br>
+GAGTCTGACACGCGGGCAAAGGCTCCTCCGGGCCCCTCACCAGCCCCAGG<br>
+TCCTTTCCCAGAGATGCCCTTGCGCCTCATGACCAGCTTGTTGAAGAGAT</p>
+<p>Note: gene_id will be the index used by rSeq to output gene
+expression. So if you want something other than gene names, such as
+Entrez gene ID, you should use them in the transcript sequence file.</p>
+<p>For your convenience, rSeq provides an option "gen_trans" to
+generate transcript sequences, e.g., </p>
+<p>rseq gen_trans refFlat.txt chrfilelist.txt</p>
+<p>Where "refFlat.txt" is the annotation file in <a href="http://genome.ucsc.edu/goldenPath/gbdDescriptionsOld.html#RefFlat">UCSC
+refFlat format</a>. As an example, the refFlat format annotation
+file for hg19 can be downloaded at <a href="http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/refFlat.txt.gz">http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/refFlat.txt.gz</a></p>
+<p>Notice that other gene annotations files downloaded from UCSC,
+such as knowGene.txt and ensGene.txt etc, are not in exactly the same
+format as the refFlat.txt, therefore manually converting to the refFlat
+format is needed before using them with rSeq.</p>
+<p>"chrfilelist.txt" is the list of filenames of DNA sequences of
+all the chromosomes. For example:</p>
+<p>/data/chr1.fa<br>
+/data/chr2.fa<br>
+/data/chr3.fa </p>
+<p>As an example, the genome sequences of all the chromosomes for
+hg19 can be downloaded at <a href="http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz">http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz</a></p>
+<p>When finish, you will get a "refFlat.txt.fa" file, which
+contains all the transcript sequences in FASTA format.</p>
+<p><strong>[2] Map the reads to the transcript sequences. </strong></p>
+<p>To map the reads, you can use either <a href="http://biogibbs.stanford.edu/%7Ejiangh/SeqMap/">SeqMap</a>
+(already provided in the rSeq package) or Eland (provided by Illumina
+with the sequencer). For SeqMap, use the following command,</p>
+<p>seqmap 2 reads.txt refFlat.txt.fa output.txt /eland:3</p>
+<p>For Eland, run with option "--multi", i.e.,</p>
+<p>eland reads.txt refFlat.txt.fa.squashed/ output.txt --multi</p>
+<p>Where "reads.txt" is the file of the sequence reads (in plain
+read sequences or FASTA format, see SeqMap or Eland's user manual for
+more details), "refFlat.txt.fa.squahshed/" is the directory containing
+the squashed sequences generated with the "squashGenome" tool in the
+ELAND package, "output.txt" is the output filename.</p>
+<p><strong>[3] Compute gene expressions.</strong> Use
+the following command:</p>
+<p>rseq comp_exp -r rl refFlat.txt.fa output.txt</p>
+<p>Where "rl" is the length of the reads (default is 25),
+"refFlat.txt.fa" is the transcript sequence file generated in step 1,
+and "output.txt" is the mapping output file generated in step 2.</p>
+<p>When finished, you will get an output file:
+"output.txt.2.gene.exp". It contains the computed gene expressions,
+indexed by gene names. It is a tab-delimited text files with each gene
+a line. The fields for each gene are:</p>
+<p>name: name or refseqID of the gene<br>
+ucount: count of unique reads<br>
+count: count of all reads, including unique reads and reweighted
+multi-reads<br>
+ratio: ratio of unique reads<br>
+total: total number of mapped reads<br>
+len: effective length of the gene (gene length - read length)<br>
+exp: expression value<br>
+lower: lower bound of the 95% confidence interval of gene expression
+(estimated by normal approximation of Binomial RVs)<br>
+upper: upper bound of the 95% confidence interval of gene expression<br>
+reduced_len: 0 by default, reserved for internal usage</p>
+<p><a href="sample.out.2.gene.exp">Here</a> is
+an example of the output file:</p>
+<p><strong><a name="isoform" id="isoform"></a>Isoform-specific
+gene expression estimation</strong></p>
+<p>For isoform-specific gene expression estimation, the three
+steps are similar as for gene expression estimation, with the following
+variations.</p>
+<p><strong>1) Prepare transcript sequences.</strong></p>
+<p>Run rSeq with option "gen_exons_junctions -v 2" to generate a
+new reference sequence file "refFlat.txt.exons_junctions.fa" and
+another file "refFlat.txt.subexons.txt", e.g.,</p>
+<p>rseq gen_exons_junctions -v 2 -r rl refFlat.txt chrfilelist.txt</p>
+<p>where rl is the read length, default is 25.</p>
+<p><strong>2) Map the reads.</strong></p>
+<p>Run Eland or SeqMap to remap the reads to file
+"refFlat.txt.exons_junctions.fa", e.g., </p>
+<p>seqmap 2 reads.txt refFlat.txt.exons_junctions.fa output.txt
+/eland:3</p>
+<p>or </p>
+<p>eland reads.txt refFlat.txt.exons_junctions.fa.squashed/
+output.txt --multi</p>
+<p><strong>3) Isoform-specific gene expression estimation.</strong></p>
+<p>Run rSeq with option "comp_exp -v 2" with file
+"refFlat.txt.subexons.txt", e.g.,</p>
+<p>rseq comp_exp -v 2 -r rl refFlat.txt.subexons.txt output.txt</p>
+<p>Where "rl" is the length of the reads (default is 25),
+"refFlat.txt.subexons.txt" is the file generated in step 1, and
+"output.txt" is the mapping output file generated in step 2.</p>
+<p>When finished, you will get an output file:
+"output.txt.2.b.exp". It contains the computed gene and isoform
+expressions, indexed by gene and isoform IDs. It is a tab-delimited
+text files with each gene a line. For example, the following line means
+that gene SDF4 has expression value 103.293, it has two isoforms
+NM_016547 and NM_016176 with expression values 0 and 103.293
+respectively.</p>
+<p>SDF4 103.293 2 NM_016547,NM_016176 0,103.293</p>
+<p> <a href="output.txt.2.b.exp">Here</a> is
+an example of the output file:</p>
+<p><strong><a name="paired" id="paired"></a>Paired-end
+RNA-Seq</strong></p>
+<p>For isoform-specific gene expression estimation based on
+paired-end RNA-Seq reads, the first two steps are the same as for
+single-end RNA-Seq reads, except that you will need to map the two
+files for both ends of the reads separately in step 2. For the third
+step, run rSeq with option "paired_end -v 2" with file
+"refFlat.txt.subexons.txt", e.g.,</p>
+<p>rseq paired_end -v 2 -r rl refFlat.txt.subexons.txt
+output1.txt output2.txt</p>
+<p>Where "rl" is the length of the reads (default is 25),
+"refFlat.txt.subexons.txt" is the file generated in step 1, and
+"output1.txt" and "output2.txt" are the two mapping output files for
+the two ends of reads generated in step 2.</p>
+<p>When finished, you will get an output file: "output1.txt.exp",
+in the same format as the one that you can get with single-end RNA-Seq
+reads, as described above. </p>
+<p><strong><a name="license" id="license"></a>License</strong></p>
+<p>Anyone can use the source codes, documents or the excutable
+file of rSeq free of charge for non-commercial use. For commercial use,
+please contact the <a href="../index.html">author</a>.</p>
+<p><strong><a name="method" id="method"></a>Method</strong></p>
+<p>For gene expression estimation, rSeq uses the RPKM method
+described in </p>
+<p>"<a href="http://www.nature.com/nmeth/journal/v5/n7/abs/nmeth.1226.html">Mapping
+and Quantifying Mammalian Transcriptomes by RNA-Seq</a>", Ali
+Mortazavi, <em>et al.</em>, Nature Methods - 5, 621 - 628
+(2008).</p>
+<p>For isoform-specific gene expression estimation, rSeq uses the
+method described in</p>
+<p>"<a href="http://bioinformatics.oxfordjournals.org/cgi/content/full/25/8/1026">Statistical
+Inferences for isoform expression in RNA-Seq</a>", Hui Jiang and
+Wing Hung Wong, Bioinformatics, 25(8):1026-1032, (2009).</p>
+<p>For paired-end RNA-Seq analysis, rSeq uses the method
+described in</p>
+<p>"<a href="http://statistics.stanford.edu/%7Eckirby/techreports/BIO/BIO%20252.pdf">Statistical
+Modeling of RNA-Seq Data</a>", Julia Salzman, Hui Jiang and Wing
+Hung Wong, Technical Report in Biostatistics, Stanford University
+(2010).</p>
+<p><strong> <a name="acknowledgements" id="acknowledgements"></a>Acknowledgements </strong></p>
+<p>rSeq was developed and tested with the help of the members and
+several collaborators of the Wong lab.</p>
+</body></html>
