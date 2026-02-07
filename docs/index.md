@@ -57,18 +57,18 @@ technologies.</p>
 <p><strong>Selected Publications <small>(<a href="http://scholar.google.com/citations?user=LszKw2cAAAAJ&amp;hl=en">Google Scholar</a>) </small>
 </strong></p>
 <ul>
+  <li>
+   <p class="p2">
+       <span class="auto-style3">Ong VQ, Choi BN, Lundy DP, Xu H, Ghosh S, Jiang H, Shi Y (2026) MCMC-CE: A Novel and Efficient Algorithm for Estimating Small Right-Tail Probabilities of Quadratic Forms with Applications in Genomics</span><br class="auto-style3" /><span class="auto-style2">Journal of Computational Biology</span><span class="auto-style3">, 33 (2): 236-254. </span><span class="s3">[<a href="https://journals.sagepub.com/doi/10.1177/15578666251406305">online</a>][<a href="https://www.biorxiv.org/content/10.1101/2025.03.16.643492v1.abstract"><span class="auto-style3">bioRxiv</span></a><span class="auto-style3">][<a href="https://github.com/shilab2017/MCMC-CE-quadratic-forms"><span class="auto-style3">code</span></a>]</span></span></p>
+</li>
  <li>
       <p class="p2">
-          <span class="auto-style3">Wang R, Tran L, Brennan B, Fritsche LG, He K, Brenner JC, Jiang H (2025) Asymmetric Integration of Various Cancer Datasets for Identifying Risk-Associated Variants and Genes</span><br class="auto-style3" /><span class="auto-style2">Bioinformatics Advances</span><span class="auto-style3">,  DOI:10.1093/bioadv/vbaf253. [<a href="https://doi.org/10.1093/bioadv/vbaf253">online</a>]</span><span class="auto-style3">[<a href="https://github.com/rxxwang/integrate_cancer">code</a>]</span></p>
+          <span class="auto-style3">Wang R, Tran L, Brennan B, Fritsche LG, He K, Brenner JC, Jiang H (2025) Asymmetric Integration of Various Cancer Datasets for Identifying Risk-Associated Variants and Genes</span><br class="auto-style3" /><span class="auto-style2">Bioinformatics Advances</span><span class="auto-style3">, 5 (1): vbaf253. [<a href="https://doi.org/10.1093/bioadv/vbaf253">online</a>]</span><span class="auto-style3">[<a href="https://github.com/rxxwang/integrate_cancer">code</a>]</span></p>
   </li>
   <li>
        <p class="p2">
            <span class="auto-style3">Wang D, Ye W, Sung R, Jiang H, Taylor JMG, Ly L, He K (2025) Kullback-Leibler-based discrete failure time models for integration of published prediction models with new time-to-event dataset </span><br class="auto-style3" /><span class="auto-style2">Annals of Applied statistics</span><span class="auto-style3">, 19 (2): 1167-1189. [<a href="https://projecteuclid.org/journals/annals-of-applied-statistics/volume-19/issue-2/Kullback-Leibler-based-discrete-failure-time-models-for-integration-of/10.1214/24-AOAS1955.short">online</a>]</span><span class="auto-style3">[<a href="https://github.com/UM-KevinHe/DiscreteKL">code</a>]</span></p>
    </li>
-  <li>
-   <p class="p2">
-       <span class="auto-style3">Ong VQ, Choi BN, Lundy DP, Xu H, Ghosh S, Jiang H, Shi Y (2025) MCMC-CE: A Novel and Efficient Algorithm for Estimating Small Right-Tail Probabilities of Quadratic Forms with Applications in Genomics</span><br class="auto-style3" /><span class="auto-style2">preprint</span><span class="auto-style3">. </span><span class="s3">[<a href="https://www.biorxiv.org/content/10.1101/2025.03.16.643492v1.abstract"><span class="auto-style3">bioRxiv</span></a><span class="auto-style3">][<a href="https://github.com/shilab2017/MCMC-CE-quadratic-forms"><span class="auto-style3">code</span></a>]</span></span></p>
-</li>
   <li>
        <p class="p2">
            <span class="auto-style3">Wang M, Fontaine S, Jiang H, Li G (2024) ADAPT: Analysis of Microbiome Differential Abundance by Pooling Tobit Models</span><br class="auto-style3"><span class="auto-style2">Bioinformatics</span><span class="auto-style3">. [<a href="https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btae661/7885158">online</a>]</span><span class="auto-style3">[<a href="https://github.com/mkbwang/ADAPT_example">code</a>]</span></p>
