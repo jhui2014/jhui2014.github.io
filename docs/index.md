@@ -59,7 +59,7 @@ technologies.</p>
 <ul>
   <li>
    <p class="p2">
-       <span class="auto-style3">Ong VQ, Choi BN, Lundy DP, Xu H, Ghosh S, Jiang H, Shi Y (2026) MCMC-CE: A Novel and Efficient Algorithm for Estimating Small Right-Tail Probabilities of Quadratic Forms with Applications in Genomics</span><br class="auto-style3" /><span class="auto-style2">Journal of Computational Biology</span><span class="auto-style3">, 33 (2): 236-254. </span><span class="s3">[<a href="https://journals.sagepub.com/doi/10.1177/15578666251406305">online</a>][<a href="https://www.biorxiv.org/content/10.1101/2025.03.16.643492v1.abstract"><span class="auto-style3">bioRxiv</span></a><span class="auto-style3">][<a href="https://github.com/shilab2017/MCMC-CE-quadratic-forms"><span class="auto-style3">code</span></a>]</span></span></p>
+       <span class="auto-style3">Ong VQ, Choi BN, Lundy DP, Xu H, Ghosh S, Jiang H, Shi Y (2026) MCMC-CE: A Novel and Efficient Algorithm for Estimating Small Right-Tail Probabilities of Quadratic Forms with Applications in Genomics</span><br class="auto-style3" /><span class="auto-style2">Journal of Computational Biology</span><span class="auto-style3">, 33 (2): 236-254. </span><span class="s3">[<a href="https://journals.sagepub.com/doi/10.1177/15578666251406305"><span class="auto-style3">online</span></a>][<a href="https://www.biorxiv.org/content/10.1101/2025.03.16.643492v1.abstract"><span class="auto-style3">bioRxiv</span></a><span class="auto-style3">][<a href="https://github.com/shilab2017/MCMC-CE-quadratic-forms"><span class="auto-style3">code</span></a>]</span></span></p>
 </li>
  <li>
       <p class="p2">
